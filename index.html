@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+ 
         :root {
             --primary: #2c3e50;
             --secondary: #e74c3c;
@@ -21,14 +21,14 @@
             --success: #27ae60;
             --text: #34495e;
         }
-
+ 
         body {
             font-family: 'Poppins', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: var(--text);
             min-height: 100vh;
         }
-
+ 
         /* ============ ADMIN LOGIN ============ */
         .admin-login-container {
             display: none;
@@ -39,11 +39,11 @@
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-
+ 
         .admin-login-container.active {
             display: flex;
         }
-
+ 
         .admin-login-box {
             background: white;
             border-radius: 20px;
@@ -53,30 +53,30 @@
             text-align: center;
             animation: slideInUp 0.6s ease-out;
         }
-
+ 
         .admin-login-icon {
             font-size: 4em;
             margin-bottom: 20px;
         }
-
+ 
         .admin-login-title {
             color: var(--primary);
             font-size: 2em;
             font-weight: 700;
             margin-bottom: 10px;
         }
-
+ 
         .admin-login-subtitle {
             color: #7f8c8d;
             margin-bottom: 40px;
             font-size: 0.95em;
         }
-
+ 
         .admin-form-group {
             margin-bottom: 25px;
             text-align: left;
         }
-
+ 
         .admin-form-group label {
             display: block;
             margin-bottom: 10px;
@@ -84,7 +84,7 @@
             color: var(--primary);
             font-size: 0.95em;
         }
-
+ 
         .admin-form-group input {
             width: 100%;
             padding: 14px 16px;
@@ -94,13 +94,13 @@
             transition: all 0.3s ease;
             font-family: inherit;
         }
-
+ 
         .admin-form-group input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
         }
-
+ 
         .admin-login-btn {
             width: 100%;
             padding: 14px;
@@ -114,12 +114,12 @@
             transition: all 0.3s ease;
             margin-top: 10px;
         }
-
+ 
         .admin-login-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
-
+ 
         .admin-default-creds {
             background: #e8f4f8;
             border-left: 4px solid var(--accent);
@@ -129,22 +129,22 @@
             text-align: left;
             font-size: 0.85em;
         }
-
+ 
         .admin-default-creds strong {
             color: var(--primary);
         }
-
+ 
         /* ============ PUBLIC BLOG PAGE ============ */
         .public-container {
             display: none;
             min-height: 100vh;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
-
+ 
         .public-container.active {
             display: block;
         }
-
+ 
         .public-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
@@ -153,7 +153,7 @@
             position: relative;
             overflow: hidden;
         }
-
+ 
         .public-header::before {
             content: "";
             position: absolute;
@@ -165,7 +165,7 @@
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
         }
-
+ 
         .public-header::after {
             content: "";
             position: absolute;
@@ -177,25 +177,25 @@
             border-radius: 50%;
             animation: float 8s ease-in-out infinite reverse;
         }
-
+ 
         .public-header-content {
             position: relative;
             z-index: 1;
         }
-
+ 
         .public-header h1 {
             font-size: 3.5em;
             margin-bottom: 15px;
             font-weight: 700;
             letter-spacing: -1px;
         }
-
+ 
         .public-header p {
             font-size: 1.2em;
             opacity: 0.9;
             margin-bottom: 30px;
         }
-
+ 
         .public-header-badge {
             display: inline-block;
             background: rgba(255, 255, 255, 0.2);
@@ -205,39 +205,39 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             margin-bottom: 20px;
         }
-
+ 
         .public-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 60px 30px;
         }
-
+ 
         .content-header {
             text-align: center;
             margin-bottom: 60px;
         }
-
+ 
         .content-header h2 {
             color: var(--primary);
             font-size: 2.5em;
             margin-bottom: 15px;
             font-weight: 700;
         }
-
+ 
         .content-header p {
             color: #7f8c8d;
             font-size: 1.1em;
             max-width: 600px;
             margin: 0 auto;
         }
-
+ 
         .blogs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 40px;
             margin-bottom: 60px;
         }
-
+ 
         .blog-card {
             background: white;
             border-radius: 15px;
@@ -247,20 +247,20 @@
             cursor: pointer;
             border: 2px solid transparent;
         }
-
+ 
         .blog-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
             border-color: var(--accent);
         }
-
+ 
         .blog-card-header {
             background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
             color: white;
             padding: 25px;
             position: relative;
         }
-
+ 
         .blog-card-header::after {
             content: "";
             position: absolute;
@@ -271,7 +271,7 @@
             background: rgba(255, 255, 255, 0.1);
             transform: skewX(-20deg);
         }
-
+ 
         .blog-category {
             display: inline-block;
             background: rgba(255, 255, 255, 0.2);
@@ -283,7 +283,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
+ 
         .blog-card-title {
             font-size: 1.4em;
             font-weight: 700;
@@ -292,24 +292,24 @@
             position: relative;
             z-index: 1;
         }
-
+ 
         .blog-card-meta {
             font-size: 0.85em;
             opacity: 0.9;
             position: relative;
             z-index: 1;
         }
-
+ 
         .blog-card-body {
             padding: 30px;
         }
-
+ 
         .blog-author {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
         }
-
+ 
         .blog-author-avatar {
             width: 45px;
             height: 45px;
@@ -322,25 +322,25 @@
             font-weight: 600;
             margin-right: 12px;
         }
-
+ 
         .blog-author-info h4 {
             color: var(--primary);
             font-size: 0.95em;
             margin-bottom: 2px;
         }
-
+ 
         .blog-author-info p {
             color: #95a5a6;
             font-size: 0.85em;
         }
-
+ 
         .blog-excerpt {
             color: var(--text);
             line-height: 1.8;
             margin-bottom: 20px;
             font-size: 0.95em;
         }
-
+ 
         .read-more-btn {
             display: inline-block;
             color: var(--accent);
@@ -349,40 +349,40 @@
             font-size: 0.95em;
             transition: all 0.3s ease;
         }
-
+ 
         .read-more-btn:hover {
             color: var(--secondary);
             transform: translateX(5px);
         }
-
+ 
         .no-blogs-message {
             text-align: center;
             padding: 80px 30px;
             color: #7f8c8d;
         }
-
+ 
         .no-blogs-message h2 {
             font-size: 2em;
             color: var(--primary);
             margin-bottom: 15px;
             font-weight: 700;
         }
-
+ 
         .no-blogs-message p {
             font-size: 1.1em;
         }
-
+ 
         /* ============ ADMIN DASHBOARD ============ */
         .admin-dashboard {
             display: none;
             min-height: 100vh;
             background: #f8f9fa;
         }
-
+ 
         .admin-dashboard.active {
             display: block;
         }
-
+ 
         .admin-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
@@ -392,32 +392,32 @@
             align-items: center;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .admin-header h1 {
             font-size: 1.8em;
             font-weight: 700;
         }
-
+ 
         .admin-header-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-
+ 
         .admin-info {
             text-align: right;
         }
-
+ 
         .admin-name {
             font-weight: 600;
             font-size: 0.95em;
         }
-
+ 
         .admin-role {
             font-size: 0.85em;
             opacity: 0.8;
         }
-
+ 
         .logout-btn {
             padding: 10px 20px;
             background: var(--secondary);
@@ -428,18 +428,18 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
+ 
         .logout-btn:hover {
             background: #c0392b;
             transform: translateY(-2px);
         }
-
+ 
         .admin-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
         }
-
+ 
         .admin-nav {
             display: flex;
             gap: 15px;
@@ -447,7 +447,7 @@
             border-bottom: 2px solid #ecf0f1;
             padding-bottom: 0;
         }
-
+ 
         .admin-nav-btn {
             padding: 15px 25px;
             background: transparent;
@@ -459,32 +459,32 @@
             transition: all 0.3s ease;
             font-size: 0.95em;
         }
-
+ 
         .admin-nav-btn.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
         }
-
+ 
         .admin-nav-btn:hover {
             color: var(--accent);
         }
-
+ 
         .admin-section {
             display: none;
         }
-
+ 
         .admin-section.active {
             display: block;
             animation: fadeIn 0.4s ease;
         }
-
+ 
         .section-title {
             font-size: 2em;
             color: var(--primary);
             margin-bottom: 30px;
             font-weight: 700;
         }
-
+ 
         .form-card {
             background: white;
             border-radius: 15px;
@@ -492,11 +492,11 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 30px;
         }
-
+ 
         .form-group {
             margin-bottom: 25px;
         }
-
+ 
         .form-group label {
             display: block;
             margin-bottom: 10px;
@@ -504,7 +504,7 @@
             color: var(--primary);
             font-size: 0.95em;
         }
-
+ 
         .form-group input,
         .form-group textarea,
         .form-group select {
@@ -516,12 +516,12 @@
             transition: all 0.3s ease;
             font-family: inherit;
         }
-
+ 
         .form-group textarea {
             resize: vertical;
             min-height: 150px;
         }
-
+ 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
@@ -529,7 +529,7 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
         }
-
+ 
         .submit-btn {
             padding: 14px 40px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -541,19 +541,19 @@
             font-size: 0.95em;
             transition: all 0.3s ease;
         }
-
+ 
         .submit-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
-
+ 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
-
+ 
         .stat-card {
             background: white;
             border-radius: 15px;
@@ -561,26 +561,26 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             border-top: 4px solid var(--accent);
         }
-
+ 
         .stat-number {
             font-size: 2.5em;
             font-weight: 700;
             color: var(--accent);
             margin-bottom: 10px;
         }
-
+ 
         .stat-label {
             color: #7f8c8d;
             font-weight: 600;
         }
-
+ 
         .blogs-list {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
-
+ 
         .blog-item {
             border-bottom: 1px solid #ecf0f1;
             padding: 25px;
@@ -589,26 +589,26 @@
             align-items: center;
             transition: all 0.3s ease;
         }
-
+ 
         .blog-item:hover {
             background: #f8f9fa;
         }
-
+ 
         .blog-item:last-child {
             border-bottom: none;
         }
-
+ 
         .blog-item-info h3 {
             color: var(--primary);
             margin-bottom: 8px;
             font-size: 1.1em;
         }
-
+ 
         .blog-item-meta {
             color: #7f8c8d;
             font-size: 0.85em;
         }
-
+ 
         .delete-btn {
             padding: 8px 16px;
             background: #e74c3c;
@@ -619,12 +619,12 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
+ 
         .delete-btn:hover {
             background: #c0392b;
             transform: scale(1.05);
         }
-
+ 
         .success-message {
             background: #d4edda;
             border: 1px solid #c3e6cb;
@@ -634,11 +634,11 @@
             margin-bottom: 20px;
             display: none;
         }
-
+ 
         .success-message.show {
             display: block;
         }
-
+ 
         .modal {
             display: none;
             position: fixed;
@@ -650,13 +650,13 @@
             background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease;
         }
-
+ 
         .modal.active {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
+ 
         .modal-content {
             background: white;
             border-radius: 15px;
@@ -665,14 +665,14 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: slideInUp 0.3s ease;
         }
-
+ 
         .modal-title {
             font-size: 1.5em;
             color: var(--primary);
             margin-bottom: 20px;
             font-weight: 700;
         }
-
+ 
         .modal-close {
             float: right;
             font-size: 1.5em;
@@ -680,11 +680,11 @@
             color: #7f8c8d;
             transition: all 0.3s ease;
         }
-
+ 
         .modal-close:hover {
             color: var(--primary);
         }
-
+ 
         .public-link-display {
             background: #f0f3f4;
             padding: 15px;
@@ -695,7 +695,7 @@
             color: var(--primary);
             font-weight: 600;
         }
-
+ 
         .copy-link-btn {
             width: 100%;
             padding: 12px;
@@ -707,12 +707,12 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
+ 
         .copy-link-btn:hover {
             background: #2980b9;
             transform: translateY(-2px);
         }
-
+ 
         /* Animations */
         @keyframes slideInUp {
             from {
@@ -724,7 +724,7 @@
                 transform: translateY(0);
             }
         }
-
+ 
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -733,7 +733,7 @@
                 opacity: 1;
             }
         }
-
+ 
         @keyframes float {
             0%, 100% {
                 transform: translateY(0px);
@@ -742,28 +742,28 @@
                 transform: translateY(20px);
             }
         }
-
+ 
         /* Responsive */
         @media (max-width: 768px) {
             .public-header h1 {
                 font-size: 2.2em;
             }
-
+ 
             .blogs-grid {
                 grid-template-columns: 1fr;
                 gap: 25px;
             }
-
+ 
             .admin-header {
                 flex-direction: column;
                 gap: 20px;
                 text-align: center;
             }
-
+ 
             .admin-nav {
                 flex-wrap: wrap;
             }
-
+ 
             .blog-item {
                 flex-direction: column;
                 gap: 15px;
@@ -773,7 +773,7 @@
     </style>
 </head>
 <body>
-
+ 
 <!-- ============ ADMIN LOGIN ============ -->
 <div class="admin-login-container" id="adminLoginContainer">
     <div class="admin-login-box">
@@ -786,23 +786,21 @@
                 <label for="adminEmail">Admin Email</label>
                 <input type="email" id="adminEmail" placeholder="admin@bloghub.com" required>
             </div>
-
+ 
             <div class="admin-form-group">
                 <label for="adminPassword">Admin Password</label>
                 <input type="password" id="adminPassword" placeholder="Enter admin password" required>
             </div>
-
+ 
             <button type="submit" class="admin-login-btn">Login to Admin Panel</button>
         </form>
-
-        <div class="admin-default-creds">
-            <strong>📌 Default Admin Credentials:</strong><br>
-            Email: <strong>admin@bloghub.com</strong><br>
-            Password: <strong>admin123</strong>
+ 
+        <div ="admin-default-creds">
+            
         </div>
     </div>
 </div>
-
+ 
 <!-- ============ PUBLIC BLOG PAGE ============ -->
 <div class="public-container" id="publicContainer">
     <div class="public-header">
@@ -815,24 +813,24 @@
             </button>
         </div>
     </div>
-
+ 
     <div class="public-content">
         <div class="content-header">
             <h2>Latest Blog Posts</h2>
             <p>Stay updated with fresh content and inspiring stories from our writers</p>
         </div>
-
+ 
         <div class="blogs-grid" id="blogsGrid">
             <!-- Blogs will be loaded here -->
         </div>
-
+ 
         <div id="noBlogsMessage" class="no-blogs-message" style="display: none;">
             <h2>No Blogs Published Yet</h2>
             <p>Check back soon for amazing content!</p>
         </div>
     </div>
 </div>
-
+ 
 <!-- ============ ADMIN DASHBOARD ============ -->
 <div class="admin-dashboard" id="adminDashboard">
     <div class="admin-header">
@@ -845,7 +843,7 @@
             <button class="logout-btn" onclick="handleAdminLogout()">Logout</button>
         </div>
     </div>
-
+ 
     <div class="admin-container">
         <!-- Navigation Tabs -->
         <div class="admin-nav">
@@ -854,13 +852,13 @@
             <button class="admin-nav-btn" onclick="switchAdminTab('blogs')">📚 Manage Blogs</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('settings')">⚙️ Settings</button>
         </div>
-
+ 
         <!-- Dashboard Tab -->
         <div class="admin-section active" id="dashboardTab">
             <h2 class="section-title">Dashboard Overview</h2>
-
+ 
             <div class="success-message" id="successMessage">✓ Operation successful!</div>
-
+ 
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number" id="totalBlogsCount">0</div>
@@ -875,7 +873,7 @@
                     <div class="stat-label">This Month</div>
                 </div>
             </div>
-
+ 
             <div class="form-card">
                 <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.3em;">🔗 Public Blog Link</h3>
                 <p style="color: #7f8c8d; margin-bottom: 20px;">Share this link with anyone to let them view all your blogs:</p>
@@ -883,18 +881,18 @@
                 <button type="button" class="copy-link-btn" onclick="copyPublicLink()">📋 Copy Link</button>
             </div>
         </div>
-
+ 
         <!-- Upload Blog Tab -->
         <div class="admin-section" id="uploadTab">
             <h2 class="section-title">Upload New Blog</h2>
-
+ 
             <div class="form-card">
                 <form onsubmit="handleUploadBlog(event)">
                     <div class="form-group">
                         <label for="blogTitle">Blog Title</label>
                         <input type="text" id="blogTitle" placeholder="Enter an attractive blog title..." required>
                     </div>
-
+ 
                     <div class="form-group">
                         <label for="blogCategory">Category</label>
                         <select id="blogCategory" required>
@@ -908,68 +906,68 @@
                             <option value="Other">📌 Other</option>
                         </select>
                     </div>
-
+ 
                     <div class="form-group">
                         <label for="blogContent">Blog Content</label>
                         <textarea id="blogContent" placeholder="Write your amazing blog content here..." required></textarea>
                     </div>
-
+ 
                     <button type="submit" class="submit-btn">📤 Publish Blog</button>
                 </form>
             </div>
         </div>
-
+ 
         <!-- Manage Blogs Tab -->
         <div class="admin-section" id="blogsTab">
             <h2 class="section-title">Manage Your Blogs</h2>
-
+ 
             <div class="blogs-list" id="blogsList">
                 <div style="padding: 40px; text-align: center; color: #7f8c8d;">
                     No blogs published yet. Create your first blog!
                 </div>
             </div>
         </div>
-
+ 
         <!-- Settings Tab -->
         <div class="admin-section" id="settingsTab">
             <h2 class="section-title">Admin Settings</h2>
-
+ 
             <div class="form-card">
                 <h3 style="color: var(--primary); margin-bottom: 25px; font-size: 1.2em;">🔑 Change Admin Password</h3>
-
+ 
                 <form onsubmit="handleChangePassword(event)">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" id="currentPassword" placeholder="Enter current password" required>
                     </div>
-
+ 
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
                         <input type="password" id="newPassword" placeholder="Enter new password (min 6 characters)" required>
                     </div>
-
+ 
                     <div class="form-group">
                         <label for="confirmPassword">Confirm New Password</label>
                         <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
                     </div>
-
+ 
                     <button type="submit" class="submit-btn">🔐 Update Password</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+ 
 <script>
     // ============ DATA STORAGE ============
     let adminCredentials = {
-        email: 'admin@bloghub.com',
-        password: 'admin123'
+        email: 'mudassirabbas4786@gmail.com',
+        password: 'Mud786@@'
     };
-
+ 
     let blogs = [];
     let isAdminLoggedIn = false;
-
+ 
     // Load data from localStorage
     function loadData() {
         const storedBlogs = localStorage.getItem('blogs');
@@ -977,11 +975,11 @@
             blogs = JSON.parse(storedBlogs);
         }
     }
-
+ 
     function saveBlogs() {
         localStorage.setItem('blogs', JSON.stringify(blogs));
     }
-
+ 
     // ============ PAGE INITIALIZATION ============
     window.addEventListener('load', () => {
         loadData();
@@ -990,7 +988,7 @@
             loadPublicBlogs();
         }
     });
-
+ 
     // ============ CHECK ADMIN LOGIN STATUS ============
     function checkIfAdmin() {
         const adminLogged = localStorage.getItem('adminLoggedIn');
@@ -1005,14 +1003,14 @@
             document.getElementById('adminLoginContainer').style.display = 'none';
         }
     }
-
+ 
     // ============ ADMIN LOGIN ============
     function handleAdminLogin(event) {
         event.preventDefault();
-
+ 
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPassword').value;
-
+ 
         if (email === adminCredentials.email && password === adminCredentials.password) {
             isAdminLoggedIn = true;
             localStorage.setItem('adminLoggedIn', 'true');
@@ -1024,12 +1022,12 @@
             alert('❌ Invalid admin credentials!');
         }
     }
-
+ 
     function showAdminLogin() {
         document.getElementById('publicContainer').classList.remove('active');
         document.getElementById('adminLoginContainer').style.display = 'flex';
     }
-
+ 
     function handleAdminLogout() {
         if (confirm('Are you sure you want to logout?')) {
             isAdminLoggedIn = false;
@@ -1040,24 +1038,24 @@
             document.getElementById('adminPassword').value = '';
         }
     }
-
+ 
     // ============ ADMIN TAB SWITCHING ============
     function switchAdminTab(tab) {
         document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.admin-nav-btn').forEach(el => el.classList.remove('active'));
-
+ 
         document.getElementById(tab + 'Tab').classList.add('active');
         event.target.classList.add('active');
     }
-
+ 
     // ============ UPLOAD BLOG ============
     function handleUploadBlog(event) {
         event.preventDefault();
-
+ 
         const title = document.getElementById('blogTitle').value;
         const category = document.getElementById('blogCategory').value;
         const content = document.getElementById('blogContent').value;
-
+ 
         const newBlog = {
             id: Date.now(),
             title: title,
@@ -1067,34 +1065,34 @@
             date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
             views: Math.floor(Math.random() * 1000)
         };
-
+ 
         blogs.push(newBlog);
         saveBlogs();
-
+ 
         document.getElementById('uploadTab').style.display = 'none';
         document.getElementById('dashboardTab').style.display = 'block';
         showSuccessMessage('Blog published successfully!');
-
+ 
         document.getElementById('blogTitle').value = '';
         document.getElementById('blogCategory').value = '';
         document.getElementById('blogContent').value = '';
-
+ 
         loadDashboard();
         loadBlogsList();
     }
-
+ 
     // ============ LOAD PUBLIC BLOGS ============
     function loadPublicBlogs() {
         const blogsGrid = document.getElementById('blogsGrid');
         blogsGrid.innerHTML = '';
-
+ 
         if (blogs.length === 0) {
             document.getElementById('noBlogsMessage').style.display = 'block';
             return;
         }
-
+ 
         document.getElementById('noBlogsMessage').style.display = 'none';
-
+ 
         blogs.slice().reverse().forEach(blog => {
             const blogCard = document.createElement('div');
             blogCard.className = 'blog-card';
@@ -1122,17 +1120,17 @@
             blogsGrid.appendChild(blogCard);
         });
     }
-
+ 
     // ============ LOAD ADMIN BLOGS LIST ============
     function loadBlogsList() {
         const blogsList = document.getElementById('blogsList');
         blogsList.innerHTML = '';
-
+ 
         if (blogs.length === 0) {
             blogsList.innerHTML = '<div style="padding: 40px; text-align: center; color: #7f8c8d;">No blogs published yet. Create your first blog!</div>';
             return;
         }
-
+ 
         blogs.slice().reverse().forEach((blog, index) => {
             const blogItem = document.createElement('div');
             blogItem.className = 'blog-item';
@@ -1150,7 +1148,7 @@
             blogsList.appendChild(blogItem);
         });
     }
-
+ 
     function deleteBlog(blogId) {
         if (confirm('Are you sure you want to delete this blog?')) {
             blogs = blogs.filter(blog => blog.id !== blogId);
@@ -1161,30 +1159,30 @@
             showSuccessMessage('Blog deleted successfully!');
         }
     }
-
+ 
     // ============ LOAD DASHBOARD ============
     function loadDashboard() {
         document.getElementById('totalBlogsCount').textContent = blogs.length;
         document.getElementById('totalViewsCount').textContent = blogs.reduce((sum, blog) => sum + blog.views, 0);
-
+ 
         const thisMonth = blogs.filter(blog => {
             const blogDate = new Date(blog.date);
             const today = new Date();
             return blogDate.getMonth() === today.getMonth() && blogDate.getFullYear() === today.getFullYear();
         }).length;
         document.getElementById('lastPublishedCount').textContent = thisMonth;
-
+ 
         generatePublicLink();
         loadBlogsList();
     }
-
+ 
     // ============ PUBLIC LINK GENERATION ============
     function generatePublicLink() {
         const baseUrl = window.location.origin + window.location.pathname;
         const publicLink = baseUrl + '?view=public';
         document.getElementById('publicLinkDisplay').textContent = publicLink;
     }
-
+ 
     function copyPublicLink() {
         const link = document.getElementById('publicLinkDisplay').textContent;
         navigator.clipboard.writeText(link).then(() => {
@@ -1193,40 +1191,40 @@
             alert('Failed to copy. Please copy manually.');
         });
     }
-
+ 
     // ============ CHANGE PASSWORD ============
     function handleChangePassword(event) {
         event.preventDefault();
-
+ 
         const currentPassword = document.getElementById('currentPassword').value;
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
-
+ 
         if (currentPassword !== adminCredentials.password) {
             alert('❌ Current password is incorrect!');
             return;
         }
-
+ 
         if (newPassword !== confirmPassword) {
             alert('❌ Passwords do not match!');
             return;
         }
-
+ 
         if (newPassword.length < 6) {
             alert('❌ Password must be at least 6 characters!');
             return;
         }
-
+ 
         adminCredentials.password = newPassword;
         localStorage.setItem('adminPassword', newPassword);
-
+ 
         document.getElementById('currentPassword').value = '';
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
-
+ 
         showSuccessMessage('Password updated successfully! 🔐');
     }
-
+ 
     // ============ SUCCESS MESSAGE ============
     function showSuccessMessage(message) {
         const successMsg = document.getElementById('successMessage');
@@ -1237,6 +1235,6 @@
         }, 3000);
     }
 </script>
-
+ 
 </body>
 </html>
