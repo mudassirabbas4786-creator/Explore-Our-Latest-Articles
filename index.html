@@ -1,1240 +1,1301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Hub - Professional Blogging Platform</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
- 
-        :root {
-            --primary: #2c3e50;
-            --secondary: #e74c3c;
-            --accent: #3498db;
-            --light: #ecf0f1;
-            --dark: #1a252f;
-            --gold: #f39c12;
-            --success: #27ae60;
-            --text: #34495e;
-        }
- 
-        body {
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text);
-            min-height: 100vh;
-        }
- 
-        /* ============ ADMIN LOGIN ============ */
-        .admin-login-container {
-            display: none;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
- 
-        .admin-login-container.active {
-            display: flex;
-        }
- 
-        .admin-login-box {
-            background: white;
-            border-radius: 20px;
-            padding: 60px 50px;
-            max-width: 450px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            animation: slideInUp 0.6s ease-out;
-        }
- 
-        .admin-login-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
- 
-        .admin-login-title {
-            color: var(--primary);
-            font-size: 2em;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
- 
-        .admin-login-subtitle {
-            color: #7f8c8d;
-            margin-bottom: 40px;
-            font-size: 0.95em;
-        }
- 
-        .admin-form-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
- 
-        .admin-form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.95em;
-        }
- 
-        .admin-form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #ecf0f1;
-            border-radius: 8px;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
- 
-        .admin-form-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
-        }
- 
-        .admin-login-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
- 
-        .admin-login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
- 
-        .admin-default-creds {
-            background: #e8f4f8;
-            border-left: 4px solid var(--accent);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 30px;
-            text-align: left;
-            font-size: 0.85em;
-        }
- 
-        .admin-default-creds strong {
-            color: var(--primary);
-        }
- 
-        /* ============ PUBLIC BLOG PAGE ============ */
-        .public-container {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
- 
-        .public-container.active {
-            display: block;
-        }
- 
-        .public-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-            color: white;
-            padding: 80px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
- 
-        .public-header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(244, 208, 63, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
- 
-        .public-header::after {
-            content: "";
-            position: absolute;
-            bottom: -50%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(52, 152, 219, 0.1);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
- 
-        .public-header-content {
-            position: relative;
-            z-index: 1;
-        }
- 
-        .public-header h1 {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
- 
-        .public-header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
- 
-        .public-header-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.9em;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 20px;
-        }
- 
-        .public-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 60px 30px;
-        }
- 
-        .content-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
- 
-        .content-header h2 {
-            color: var(--primary);
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
- 
-        .content-header p {
-            color: #7f8c8d;
-            font-size: 1.1em;
-            max-width: 600px;
-            margin: 0 auto;
-        }
- 
-        .blogs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
-        }
- 
-        .blog-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
- 
-        .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            border-color: var(--accent);
-        }
- 
-        .blog-card-header {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 25px;
-            position: relative;
-        }
- 
-        .blog-card-header::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: -50px;
-            width: 200px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: skewX(-20deg);
-        }
- 
-        .blog-category {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
- 
-        .blog-card-title {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
- 
-        .blog-card-meta {
-            font-size: 0.85em;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
- 
-        .blog-card-body {
-            padding: 30px;
-        }
- 
-        .blog-author {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
- 
-        .blog-author-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-right: 12px;
-        }
- 
-        .blog-author-info h4 {
-            color: var(--primary);
-            font-size: 0.95em;
-            margin-bottom: 2px;
-        }
- 
-        .blog-author-info p {
-            color: #95a5a6;
-            font-size: 0.85em;
-        }
- 
-        .blog-excerpt {
-            color: var(--text);
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
- 
-        .read-more-btn {
-            display: inline-block;
-            color: var(--accent);
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-        }
- 
-        .read-more-btn:hover {
-            color: var(--secondary);
-            transform: translateX(5px);
-        }
- 
-        .no-blogs-message {
-            text-align: center;
-            padding: 80px 30px;
-            color: #7f8c8d;
-        }
- 
-        .no-blogs-message h2 {
-            font-size: 2em;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
- 
-        .no-blogs-message p {
-            font-size: 1.1em;
-        }
- 
-        /* ============ ADMIN DASHBOARD ============ */
-        .admin-dashboard {
-            display: none;
-            min-height: 100vh;
-            background: #f8f9fa;
-        }
- 
-        .admin-dashboard.active {
-            display: block;
-        }
- 
-        .admin-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
- 
-        .admin-header h1 {
-            font-size: 1.8em;
-            font-weight: 700;
-        }
- 
-        .admin-header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
- 
-        .admin-info {
-            text-align: right;
-        }
- 
-        .admin-name {
-            font-weight: 600;
-            font-size: 0.95em;
-        }
- 
-        .admin-role {
-            font-size: 0.85em;
-            opacity: 0.8;
-        }
- 
-        .logout-btn {
-            padding: 10px 20px;
-            background: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
- 
-        .logout-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
- 
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
- 
-        .admin-nav {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 40px;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 0;
-        }
- 
-        .admin-nav-btn {
-            padding: 15px 25px;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
- 
-        .admin-nav-btn.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
- 
-        .admin-nav-btn:hover {
-            color: var(--accent);
-        }
- 
-        .admin-section {
-            display: none;
-        }
- 
-        .admin-section.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
- 
-        .section-title {
-            font-size: 2em;
-            color: var(--primary);
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
- 
-        .form-card {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
- 
-        .form-group {
-            margin-bottom: 25px;
-        }
- 
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.95em;
-        }
- 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #ecf0f1;
-            border-radius: 8px;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
- 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
- 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
-        }
- 
-        .submit-btn {
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-        }
- 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
- 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
- 
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border-top: 4px solid var(--accent);
-        }
- 
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
- 
-        .stat-label {
-            color: #7f8c8d;
-            font-weight: 600;
-        }
- 
-        .blogs-list {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        }
- 
-        .blog-item {
-            border-bottom: 1px solid #ecf0f1;
-            padding: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
- 
-        .blog-item:hover {
-            background: #f8f9fa;
-        }
- 
-        .blog-item:last-child {
-            border-bottom: none;
-        }
- 
-        .blog-item-info h3 {
-            color: var(--primary);
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
- 
-        .blog-item-meta {
-            color: #7f8c8d;
-            font-size: 0.85em;
-        }
- 
-        .delete-btn {
-            padding: 8px 16px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
- 
-        .delete-btn:hover {
-            background: #c0392b;
-            transform: scale(1.05);
-        }
- 
-        .success-message {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-        }
- 
-        .success-message.show {
-            display: block;
-        }
- 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease;
-        }
- 
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
- 
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            max-width: 450px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideInUp 0.3s ease;
-        }
- 
-        .modal-title {
-            font-size: 1.5em;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
- 
-        .modal-close {
-            float: right;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #7f8c8d;
-            transition: all 0.3s ease;
-        }
- 
-        .modal-close:hover {
-            color: var(--primary);
-        }
- 
-        .public-link-display {
-            background: #f0f3f4;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            word-break: break-all;
-            font-family: monospace;
-            color: var(--primary);
-            font-weight: 600;
-        }
- 
-        .copy-link-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
- 
-        .copy-link-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
- 
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
- 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
- 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(20px);
-            }
-        }
- 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .public-header h1 {
-                font-size: 2.2em;
-            }
- 
-            .blogs-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
- 
-            .admin-header {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
- 
-            .admin-nav {
-                flex-wrap: wrap;
-            }
- 
-            .blog-item {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="theme-color" content="#070710"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="FitFlow"/>
+<title>FitFlow — Gym App</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#070710;color:#e8e6f0;min-height:100vh;overflow-x:hidden;}
+  input{outline:none;font-family:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  ::-webkit-scrollbar{display:none;}
+
+  /* Animations */
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(233,69,96,.4)}50%{transform:scale(1.08);box-shadow:0 0 60px rgba(233,69,96,.7)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  @keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+  .pulse{animation:pulse 1.3s infinite;}
+  .fade-up{animation:fadeUp .5s both;}
+  .fade-up-2{animation:fadeUp .5s .1s both;}
+  .fade-up-3{animation:fadeUp .5s .2s both;}
+  .slide-up{animation:slideUp .4s both;}
+  .shake{animation:shake .3s;}
+
+  /* Gradient text */
+  .grad{background:linear-gradient(135deg,#e94560,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+  /* Screens */
+  .screen{display:none;min-height:100vh;}
+  .screen.active{display:block;}
+
+  /* Header */
+  .header{padding:12px 16px;background:rgba(7,7,16,.96);border-bottom:1px solid #1e1e2e;position:sticky;top:0;z-index:100;backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .logo-box{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#e94560,#f97316);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#fff;flex-shrink:0;}
+
+  /* Buttons */
+  .btn-primary{padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,#e94560,#f97316);color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 24px rgba(233,69,96,.35);transition:transform .15s,box-shadow .15s;width:100%;}
+  .btn-primary:active{transform:scale(.97);}
+  .btn-secondary{padding:6px 14px;border-radius:20px;border:none;background:#1e1e2e;color:#aaa;font-size:12px;font-weight:600;}
+  .btn-tab{padding:6px 14px;border-radius:20px;border:none;font-size:11px;font-weight:700;transition:all .2s;}
+  .btn-tab.active{background:linear-gradient(135deg,#e94560,#f97316);color:#fff;}
+  .btn-tab:not(.active){background:#1e1e2e;color:#777;}
+
+  /* Cards */
+  .card{background:#0d0d1a;border-radius:16px;border:1px solid #1a1a2a;padding:16px 18px;}
+  .card-active{background:#0a180a;border-color:#2a4a2a;}
+
+  /* Input */
+  .inp{padding:12px 16px;border-radius:12px;border:1px solid #2a2a3a;background:#141420;color:#fff;font-size:14px;width:100%;transition:border-color .2s;}
+  .inp:focus{border-color:#e94560;}
+
+  /* Day selector */
+  .day-btn{min-width:60px;padding:8px 6px;border-radius:12px;border:1px solid transparent;font-weight:700;font-size:10px;transition:all .2s;text-align:center;}
+  .day-btn.active{background:linear-gradient(135deg,#e94560,#f97316);color:#fff;border-color:transparent;}
+  .day-btn.done{background:#1a2e1a;color:#4ade80;}
+  .day-btn.today-border{border-color:#333;}
+  .day-btn:not(.active):not(.done){background:#0d0d1a;color:#777;}
+
+  /* Set button */
+  .set-btn{width:38px;height:38px;border-radius:9px;border:none;font-weight:800;font-size:12px;transition:all .15s;}
+  .set-btn.done{background:linear-gradient(135deg,#e94560,#f97316);color:#fff;transform:scale(1.08);box-shadow:0 2px 12px rgba(233,69,96,.4);}
+  .set-btn:not(.done){background:#1a1a2a;color:#444;}
+
+  /* Diff badges */
+  .badge{font-size:9px;padding:2px 7px;border-radius:99px;background:#1a1a2a;}
+  .badge.beginner{color:#4ade80;}
+  .badge.intermediate{color:#facc15;}
+  .badge.advanced{color:#f87171;}
+
+  /* Timer display */
+  .timer-disp{font-size:22px;font-weight:900;letter-spacing:2px;font-variant-numeric:tabular-nums;transition:color .3s;}
+  .timer-disp.running{color:#f97316;animation:timerPulse 1s infinite;}
+  .timer-disp.paused{color:#facc15;}
+  .timer-disp.idle{color:#2a2a3a;}
+
+  /* Modal overlay */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s;}
+
+  /* Progress ring */
+  .prog-ring-text{font-size:13px;font-weight:900;fill:#e8e6f0;}
+
+  /* Warning banner */
+  .warn-banner{border-radius:12px;padding:11px 15px;margin-bottom:14px;font-size:13px;display:flex;align-items:center;gap:8px;}
+  .warn-red{background:#200a0a;border:1px solid #e94560;color:#e94560;}
+  .warn-yellow{background:#1a1800;border:1px solid #facc15;color:#facc15;}
+
+  /* Video wrapper */
+  .video-wrap{border-radius:10px;overflow:hidden;aspect-ratio:16/9;margin-top:10px;}
+  .video-wrap iframe{display:block;width:100%;height:100%;}
+
+  /* Scrollable row */
+  .scroll-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+
+  /* History row */
+  .hist-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #111122;font-size:12px;}
+
+  /* Sub status */
+  .sub-active{color:#4ade80;font-weight:700;}
+  .sub-warn{color:#facc15;font-weight:700;}
+  .sub-expired{color:#e94560;font-weight:700;}
+
+  /* Complete banner */
+  .complete-banner{padding:15px 24px;border-radius:14px;background:#0a220a;border:1px solid #2a5a2a;color:#4ade80;font-weight:800;font-size:16px;text-align:center;}
+
+  /* Page wrapper */
+  .page-wrap{max-width:860px;margin:0 auto;padding:18px 12px 80px;}
+</style>
 </head>
 <body>
- 
-<!-- ============ ADMIN LOGIN ============ -->
-<div class="admin-login-container" id="adminLoginContainer">
-    <div class="admin-login-box">
-        <div class="admin-login-icon">🔐</div>
-        <h1 class="admin-login-title">Admin Access</h1>
-        <p class="admin-login-subtitle">Secure administration panel</p>
-        
-        <form onsubmit="handleAdminLogin(event)">
-            <div class="admin-form-group">
-                <label for="adminEmail">Admin Email</label>
-                <input type="email" id="adminEmail" placeholder="admin@bloghub.com" required>
-            </div>
- 
-            <div class="admin-form-group">
-                <label for="adminPassword">Admin Password</label>
-                <input type="password" id="adminPassword" placeholder="Enter admin password" required>
-            </div>
- 
-            <button type="submit" class="admin-login-btn">Login to Admin Panel</button>
-        </form>
- 
-        <div ="admin-default-creds">
-            
-        </div>
-    </div>
+
+<!-- ═══════════════════════ SPLASH ═══════════════════════ -->
+<div id="splash" class="screen active" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">
+  <div class="pulse" style="width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#e94560,#f97316);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;">F</div>
+  <div class="fade-up" style="font-size:32px;font-weight:900;letter-spacing:-1px;">FitFlow</div>
+  <div class="fade-up-2" style="color:#555;font-size:13px;">Your Monthly Gym Companion</div>
+  <div class="fade-up-3" style="color:#333;font-size:12px;">Loading...</div>
 </div>
- 
-<!-- ============ PUBLIC BLOG PAGE ============ -->
-<div class="public-container" id="publicContainer">
-    <div class="public-header">
-        <div class="public-header-content">
-            <div class="public-header-badge">✨ Professional Blog Hub ✨</div>
-            <h1>📚 Explore Our Latest Articles</h1>
-            <p>Discover amazing stories and insights from our community</p>
-            <button class="admin-login-btn" onclick="showAdminLogin()" style="margin-top: 30px; padding: 12px 30px; font-size: 0.9em;">
-                🔐 Admin Panel
-            </button>
-        </div>
+
+<!-- ═══════════════════════ EXPIRED MODAL ═══════════════════════ -->
+<div id="expiredModal" class="modal-overlay" style="display:none;">
+  <div style="background:#0d0d1a;border-radius:24px;padding:32px;max-width:360px;width:100%;border:2px solid #e94560;text-align:center;" class="slide-up">
+    <div style="font-size:52px;margin-bottom:10px;">🔒</div>
+    <div style="font-weight:900;font-size:22px;color:#e94560;margin-bottom:10px;">Subscription Expired</div>
+    <div style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
+      Aapki <strong style="color:#fff;">₹300/month</strong> subscription expire ho gayi hai.<br/>
+      Apne gym admin se contact karein aur renew karwayein.
     </div>
- 
-    <div class="public-content">
-        <div class="content-header">
-            <h2>Latest Blog Posts</h2>
-            <p>Stay updated with fresh content and inspiring stories from our writers</p>
-        </div>
- 
-        <div class="blogs-grid" id="blogsGrid">
-            <!-- Blogs will be loaded here -->
-        </div>
- 
-        <div id="noBlogsMessage" class="no-blogs-message" style="display: none;">
-            <h2>No Blogs Published Yet</h2>
-            <p>Check back soon for amazing content!</p>
-        </div>
+    <div style="background:#1a1a2a;border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:#666;line-height:1.6;">
+      📞 Gym admin se milein ya unhe call karein<br/>
+      💰 Renewal fee: ₹300/month<br/>
+      📅 30 din ki subscription milegi
     </div>
+    <button class="btn-secondary" onclick="closeExpiredModal()">Back to Login</button>
+  </div>
 </div>
- 
-<!-- ============ ADMIN DASHBOARD ============ -->
-<div class="admin-dashboard" id="adminDashboard">
-    <div class="admin-header">
-        <h1>📊 Admin Dashboard</h1>
-        <div class="admin-header-right">
-            <div class="admin-info">
-                <div class="admin-name">Administrator</div>
-                <div class="admin-role">Full Access</div>
-            </div>
-            <button class="logout-btn" onclick="handleAdminLogout()">Logout</button>
-        </div>
+
+<!-- ═══════════════════════ PAYMENT MODAL ═══════════════════════ -->
+<div id="paymentModal" class="modal-overlay" style="display:none;">
+  <div style="background:#0d0d1a;border-radius:24px;padding:0;max-width:400px;width:100%;border:1px solid #1e1e2e;overflow:hidden;max-height:92vh;overflow-y:auto;" class="slide-up">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1a0810,#1a0e06);padding:22px 22px 18px;border-bottom:1px solid #2a1a1a;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="font-weight:900;font-size:20px;">💳 Pay & Subscribe</div>
+        <button onclick="closePaymentModal()" style="background:none;border:none;color:#666;font-size:20px;line-height:1;padding:0;">✕</button>
+      </div>
+      <div style="font-size:13px;color:#888;">Monthly Gym App Access — ₹300/month</div>
     </div>
- 
-    <div class="admin-container">
-        <!-- Navigation Tabs -->
-        <div class="admin-nav">
-            <button class="admin-nav-btn active" onclick="switchAdminTab('dashboard')">📊 Dashboard</button>
-            <button class="admin-nav-btn" onclick="switchAdminTab('upload')">📝 Upload Blog</button>
-            <button class="admin-nav-btn" onclick="switchAdminTab('blogs')">📚 Manage Blogs</button>
-            <button class="admin-nav-btn" onclick="switchAdminTab('settings')">⚙️ Settings</button>
+
+    <div style="padding:20px 22px;">
+      <!-- Step 1: Enter details -->
+      <div id="payStep1">
+        <div style="font-weight:700;font-size:14px;margin-bottom:12px;">📋 Aapki Details</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+          <input class="inp" id="payName" placeholder="Aapka Poora Naam"/>
+          <input class="inp" id="payPhone" type="tel" placeholder="Aapka Phone Number (Login ID banega)"/>
+          <input class="inp" id="payPin" type="password" placeholder="4-digit PIN banao (login ke liye)" maxlength="4"/>
         </div>
- 
-        <!-- Dashboard Tab -->
-        <div class="admin-section active" id="dashboardTab">
-            <h2 class="section-title">Dashboard Overview</h2>
- 
-            <div class="success-message" id="successMessage">✓ Operation successful!</div>
- 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="totalBlogsCount">0</div>
-                    <div class="stat-label">Total Blogs Published</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalViewsCount">0</div>
-                    <div class="stat-label">Total Views</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="lastPublishedCount">0</div>
-                    <div class="stat-label">This Month</div>
-                </div>
+
+        <div style="font-weight:700;font-size:14px;margin-bottom:12px;">💰 Payment Method Chunein</div>
+
+        <!-- EasyPaisa -->
+        <div id="epCard" onclick="selectPayMethod('easypaisa')" style="border:2px solid #1e1e2e;border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all .2s;background:#0a0a18;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#00a86b,#007a4d);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">📱</div>
+            <div style="flex:1;">
+              <div style="font-weight:800;font-size:15px;color:#00c97a;">EasyPaisa</div>
+              <div style="font-size:11px;color:#666;margin-top:1px;">Send ₹300 → Admin ka EasyPaisa number pe</div>
             </div>
- 
-            <div class="form-card">
-                <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.3em;">🔗 Public Blog Link</h3>
-                <p style="color: #7f8c8d; margin-bottom: 20px;">Share this link with anyone to let them view all your blogs:</p>
-                <div class="public-link-display" id="publicLinkDisplay">Generating link...</div>
-                <button type="button" class="copy-link-btn" onclick="copyPublicLink()">📋 Copy Link</button>
-            </div>
+            <div id="epCheck" style="display:none;font-size:20px;">✅</div>
+          </div>
         </div>
- 
-        <!-- Upload Blog Tab -->
-        <div class="admin-section" id="uploadTab">
-            <h2 class="section-title">Upload New Blog</h2>
- 
-            <div class="form-card">
-                <form onsubmit="handleUploadBlog(event)">
-                    <div class="form-group">
-                        <label for="blogTitle">Blog Title</label>
-                        <input type="text" id="blogTitle" placeholder="Enter an attractive blog title..." required>
-                    </div>
- 
-                    <div class="form-group">
-                        <label for="blogCategory">Category</label>
-                        <select id="blogCategory" required>
-                            <option value="">Select a category</option>
-                            <option value="Technology">🚀 Technology</option>
-                            <option value="Business">💼 Business</option>
-                            <option value="Lifestyle">🌟 Lifestyle</option>
-                            <option value="Education">📚 Education</option>
-                            <option value="Entertainment">🎬 Entertainment</option>
-                            <option value="Travel">✈️ Travel</option>
-                            <option value="Other">📌 Other</option>
-                        </select>
-                    </div>
- 
-                    <div class="form-group">
-                        <label for="blogContent">Blog Content</label>
-                        <textarea id="blogContent" placeholder="Write your amazing blog content here..." required></textarea>
-                    </div>
- 
-                    <button type="submit" class="submit-btn">📤 Publish Blog</button>
-                </form>
+
+        <!-- JazzCash -->
+        <div id="jcCard" onclick="selectPayMethod('jazzcash')" style="border:2px solid #1e1e2e;border-radius:14px;padding:14px 16px;margin-bottom:18px;cursor:pointer;transition:all .2s;background:#0a0a18;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#cc0000,#990000);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">💸</div>
+            <div style="flex:1;">
+              <div style="font-weight:800;font-size:15px;color:#ff4444;">JazzCash</div>
+              <div style="font-size:11px;color:#666;margin-top:1px;">Send ₹300 → Admin ka JazzCash number pe</div>
             </div>
+            <div id="jcCheck" style="display:none;font-size:20px;">✅</div>
+          </div>
         </div>
- 
-        <!-- Manage Blogs Tab -->
-        <div class="admin-section" id="blogsTab">
-            <h2 class="section-title">Manage Your Blogs</h2>
- 
-            <div class="blogs-list" id="blogsList">
-                <div style="padding: 40px; text-align: center; color: #7f8c8d;">
-                    No blogs published yet. Create your first blog!
-                </div>
-            </div>
+
+        <div id="payMethodError" style="display:none;color:#e94560;font-size:12px;margin-bottom:10px;"></div>
+        <button class="btn-primary" onclick="goPayStep2()" style="padding:13px;">Aage Barho →</button>
+      </div>
+
+      <!-- Step 2: Payment instructions -->
+      <div id="payStep2" style="display:none;">
+        <div id="payInstructions"></div>
+        <div style="margin-top:18px;">
+          <div style="font-weight:700;font-size:14px;margin-bottom:10px;">📸 Payment Screenshot / TxID</div>
+          <input class="inp" id="payTxId" placeholder="Transaction ID ya last 4 digits daalein"/>
+          <div style="font-size:11px;color:#555;margin-top:6px;">Screenshot apne gym admin ko WhatsApp pe bhi bhej sakte ho</div>
         </div>
- 
-        <!-- Settings Tab -->
-        <div class="admin-section" id="settingsTab">
-            <h2 class="section-title">Admin Settings</h2>
- 
-            <div class="form-card">
-                <h3 style="color: var(--primary); margin-bottom: 25px; font-size: 1.2em;">🔑 Change Admin Password</h3>
- 
-                <form onsubmit="handleChangePassword(event)">
-                    <div class="form-group">
-                        <label for="currentPassword">Current Password</label>
-                        <input type="password" id="currentPassword" placeholder="Enter current password" required>
-                    </div>
- 
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" placeholder="Enter new password (min 6 characters)" required>
-                    </div>
- 
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm New Password</label>
-                        <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
-                    </div>
- 
-                    <button type="submit" class="submit-btn">🔐 Update Password</button>
-                </form>
-            </div>
+        <div id="paySubmitError" style="display:none;color:#e94560;font-size:12px;margin-top:10px;"></div>
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button onclick="goPayStep1()" style="flex:1;padding:12px;border-radius:50px;border:none;background:#1e1e2e;color:#aaa;font-weight:700;font-size:14px;cursor:pointer;">← Wapas</button>
+          <button class="btn-primary" onclick="submitPayment()" style="flex:2;padding:12px;">✅ Payment Submit Karein</button>
         </div>
+      </div>
+
+      <!-- Step 3: Pending confirmation -->
+      <div id="payStep3" style="display:none;text-align:center;padding:10px 0;">
+        <div style="font-size:52px;margin-bottom:14px;">⏳</div>
+        <div style="font-weight:900;font-size:20px;margin-bottom:10px;color:#facc15;">Payment Pending!</div>
+        <div style="color:#888;font-size:13px;line-height:1.7;margin-bottom:20px;">
+          Aapki payment request submit ho gayi hai.<br/>
+          <strong style="color:#fff;">Gym admin verify karenge</strong> aur 1-2 ghante mein aapka account activate ho jayega.<br/><br/>
+          Activate hone ke baad same phone + PIN se login karein.
+        </div>
+        <div id="payPendingDetails" style="background:#1a1a2a;border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:#666;text-align:left;line-height:1.8;"></div>
+        <button onclick="closePaymentModal()" class="btn-primary" style="padding:12px;">Theek Hai, Login Karenge →</button>
+      </div>
     </div>
+  </div>
 </div>
- 
+
+<!-- ═══════════════════════ CHANGE PASSWORD MODAL (ADMIN) ═══════════════════════ -->
+<div id="changePassModal" class="modal-overlay" style="display:none;">
+  <div style="background:#0d0d1a;border-radius:24px;padding:26px;max-width:360px;width:100%;border:1px solid #1e1e2e;" class="slide-up">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <div style="font-weight:900;font-size:18px;">🔑 Admin Password Change</div>
+      <button onclick="closeChangePassModal()" style="background:none;border:none;color:#666;font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div id="cpError" style="display:none;background:#200a0a;border:1px solid #e94560;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e94560;"></div>
+    <div id="cpSuccess" style="display:none;background:#0a200a;border:1px solid #4ade80;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#4ade80;"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <input class="inp" id="cpOld" type="password" placeholder="Purana Password"/>
+      <input class="inp" id="cpNew" type="password" placeholder="Naya Password (min 6 chars)"/>
+      <input class="inp" id="cpConfirm" type="password" placeholder="Naya Password Dobara Daalein"/>
+      <button class="btn-primary" onclick="doChangeAdminPass()" style="padding:12px;">Password Change Karein</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CHANGE MEMBER PIN MODAL ═══════════════════════ -->
+<div id="changeMemberPinModal" class="modal-overlay" style="display:none;">
+  <div style="background:#0d0d1a;border-radius:24px;padding:26px;max-width:360px;width:100%;border:1px solid #1e1e2e;" class="slide-up">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-weight:900;font-size:18px;">📱 Member PIN Change</div>
+      <button onclick="closeChangeMemberPinModal()" style="background:none;border:none;color:#666;font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div id="cmpName" style="color:#888;font-size:13px;margin-bottom:16px;"></div>
+    <div id="cmpError" style="display:none;background:#200a0a;border:1px solid #e94560;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e94560;"></div>
+    <div id="cmpSuccess" style="display:none;background:#0a200a;border:1px solid #4ade80;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#4ade80;"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <input class="inp" id="cmpNew" type="password" placeholder="Naya 4-digit PIN" maxlength="4"/>
+      <input class="inp" id="cmpConfirm" type="password" placeholder="PIN Dobara Daalein" maxlength="4"/>
+      <button class="btn-primary" onclick="doChangeMemberPin()" style="padding:12px;">PIN Change Karein</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MEMBER CHANGE OWN PIN MODAL ═══════════════════════ -->
+<div id="memberChangePinModal" class="modal-overlay" style="display:none;">
+  <div style="background:#0d0d1a;border-radius:24px;padding:26px;max-width:360px;width:100%;border:1px solid #1e1e2e;" class="slide-up">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <div style="font-weight:900;font-size:18px;">🔑 Apna PIN Change Karein</div>
+      <button onclick="document.getElementById('memberChangePinModal').style.display='none'" style="background:none;border:none;color:#666;font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div id="mcpError" style="display:none;background:#200a0a;border:1px solid #e94560;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e94560;"></div>
+    <div id="mcpSuccess" style="display:none;background:#0a200a;border:1px solid #4ade80;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#4ade80;"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <input class="inp" id="mcpOld" type="password" placeholder="Purana PIN" maxlength="4"/>
+      <input class="inp" id="mcpNew" type="password" placeholder="Naya 4-digit PIN" maxlength="4"/>
+      <input class="inp" id="mcpConfirm" type="password" placeholder="Naya PIN Dobara" maxlength="4"/>
+      <button class="btn-primary" onclick="doMemberChangePin()" style="padding:12px;">PIN Change Karein</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ LOGIN SCREEN ═══════════════════════ -->
+<div id="loginScreen" class="screen">
+  <div style="padding:36px 24px 0;text-align:center;" class="fade-up">
+    <div style="width:68px;height:68px;border-radius:22px;background:linear-gradient(135deg,#e94560,#f97316);display:inline-flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;margin-bottom:12px;box-shadow:0 0 50px rgba(233,69,96,.4);">F</div>
+    <div style="font-size:28px;font-weight:900;letter-spacing:-1px;">FitFlow</div>
+    <div style="color:#555;font-size:13px;margin-top:4px;">Monthly Gym Membership App</div>
+  </div>
+
+  <!-- Member Login Form -->
+  <div id="memberLoginForm" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 16px;" class="fade-up-2">
+    <div style="width:100%;max-width:360px;background:#0d0d1a;border-radius:24px;padding:26px;border:1px solid #1e1e2e;">
+      <div style="font-weight:800;font-size:19px;margin-bottom:18px;">Member Login</div>
+      <div id="loginError" style="display:none;background:#200a0a;border:1px solid #e94560;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e94560;line-height:1.4;"></div>
+      <div style="display:flex;flex-direction:column;gap:11px;">
+        <input class="inp" id="loginPhone" type="tel" placeholder="📱 Phone Number" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <input class="inp" id="loginPin" type="password" placeholder="🔑 4-digit PIN" maxlength="4" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <button class="btn-primary" onclick="doLogin()">Login & Start Training →</button>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #1a1a2a;">
+        <button onclick="openPaymentModal()" style="width:100%;padding:12px;border-radius:50px;border:2px solid #1e3a2a;background:transparent;color:#4ade80;font-weight:800;font-size:14px;cursor:pointer;">
+          💳 Naya Subscription Lein — ₹300/month
+        </button>
+      </div>
+      <div style="text-align:center;margin-top:10px;color:#333;font-size:11px;">Ya gym admin se contact karein</div>
+      <div style="text-align:center;margin-top:10px;">
+        <button onclick="showAdminLoginForm()" style="background:none;border:none;color:#333;font-size:11px;text-decoration:underline;cursor:pointer;">Admin Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Login Form -->
+  <div id="adminLoginForm" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px 16px;">
+    <div style="width:100%;max-width:360px;background:#0d0d1a;border-radius:24px;padding:26px;border:1px solid #1e1e2e;">
+      <div style="font-weight:800;font-size:19px;margin-bottom:18px;">🔐 Admin Panel</div>
+      <div id="adminError" style="display:none;background:#200a0a;border:1px solid #e94560;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#e94560;"></div>
+      <input class="inp" id="adminPassInput" type="password" placeholder="Admin Password" style="margin-bottom:11px;" onkeydown="if(event.key==='Enter')doAdminLogin()"/>
+      <button class="btn-primary" onclick="doAdminLogin()">Enter Admin Panel</button>
+      <div style="text-align:center;margin-top:14px;">
+        <button onclick="showMemberLoginForm()" style="background:none;border:none;color:#555;font-size:12px;cursor:pointer;">← Member Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ ADMIN SCREEN ═══════════════════════ -->
+<div id="adminScreen" class="screen">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="logo-box">F</div>
+      <span style="font-weight:800;font-size:17px;">FitFlow</span>
+      <span style="padding:2px 10px;background:#e94560;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:.5px;">ADMIN</span>
+    </div>
+    <button class="btn-secondary" onclick="adminLogout()">Logout</button>
+    <button onclick="openChangePassModal()" style="padding:6px 12px;border-radius:20px;border:none;background:#1a1a2e;color:#facc15;font-size:11px;font-weight:700;cursor:pointer;">🔑 Password</button>
+  </div>
+
+  <div class="page-wrap">
+    <!-- Stats -->
+    <div id="adminStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;"></div>
+
+    <!-- Share Link -->
+    <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:180px;">
+        <div style="font-weight:700;font-size:14px;margin-bottom:2px;">📲 Member App Link</div>
+        <div style="font-size:11px;color:#666;">Yeh link members ko share karo — kisi bhi phone pe open hoga</div>
+        <div id="appLinkText" style="font-size:10px;color:#444;margin-top:4px;word-break:break-all;"></div>
+      </div>
+      <button id="copyLinkBtn" onclick="copyAppLink()" style="padding:9px 20px;border-radius:50px;border:none;background:linear-gradient(135deg,#e94560,#f97316);color:#fff;font-weight:800;font-size:13px;white-space:nowrap;">Copy Link</button>
+    </div>
+
+    <!-- Add Member -->
+    <div class="card" style="margin-bottom:20px;overflow:hidden;padding:0;">
+      <button onclick="toggleAddForm()" style="width:100%;padding:15px 18px;background:none;border:none;color:#e8e6f0;font-weight:700;font-size:14px;text-align:left;display:flex;align-items:center;justify-content:space-between;">
+        <span>➕ New Member — ₹300/month</span>
+        <span id="addFormToggleIcon" style="color:#e94560;font-size:20px;">+</span>
+      </button>
+      <div id="addMemberFormWrap" style="display:none;padding:0 18px 18px;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input class="inp" id="newName" placeholder="Full Name"/>
+          <input class="inp" id="newPhone" type="tel" placeholder="Phone Number (Login ID)"/>
+          <input class="inp" id="newPin" type="password" placeholder="4-digit PIN" maxlength="4"/>
+          <button class="btn-primary" onclick="addMember()" style="padding:11px;">Add Member + Activate 30 Days</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Payments -->
+    <div id="pendingPaymentsSection" style="margin-bottom:20px;"></div>
+
+    <!-- Member List -->
+    <div style="font-weight:800;font-size:17px;margin-bottom:12px;">Members</div>
+    <div id="memberList"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MEMBER APP SCREEN ═══════════════════════ -->
+<div id="memberScreen" class="screen">
+  <!-- Header -->
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:9px;">
+      <div class="logo-box">F</div>
+      <div>
+        <div style="font-weight:800;font-size:15px;line-height:1;">FitFlow</div>
+        <div id="subStatusBar" style="font-size:9px;font-weight:700;margin-top:1px;"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <button class="btn-tab active" id="tabWorkout" onclick="switchTab('workout')">🏋️ Workout</button>
+      <button class="btn-tab" id="tabProgress" onclick="switchTab('progress')">📊 Progress</button>
+      <button class="btn-secondary" onclick="memberLogout()" style="font-size:10px;padding:5px 10px;">Exit</button>
+      <button onclick="document.getElementById('memberChangePinModal').style.display='flex'" style="padding:5px 10px;border-radius:20px;border:none;background:#1a1a2e;color:#facc15;font-size:10px;font-weight:700;cursor:pointer;">🔑 PIN</button>
+    </div>
+  </div>
+
+  <!-- Workout Tab -->
+  <div id="workoutTab" class="page-wrap">
+    <div id="subWarnBanner"></div>
+
+    <!-- Day Selector -->
+    <div class="scroll-row" id="daySelectorRow" style="margin-bottom:20px;"></div>
+
+    <!-- Workout Header Card -->
+    <div style="background:linear-gradient(135deg,#160810,#160d06);border-radius:18px;padding:18px 20px;margin-bottom:18px;border:1px solid #2a1a1a;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+      <div>
+        <div style="font-size:11px;color:#777;margin-bottom:3px;">Today's Focus</div>
+        <div id="workoutTitle" style="font-size:22px;font-weight:800;"></div>
+        <div id="workoutMeta" style="font-size:11px;color:#555;margin-top:3px;"></div>
+      </div>
+      <svg id="progressRing" width="72" height="72" style="transform:rotate(-90deg);flex-shrink:0;">
+        <circle cx="36" cy="36" r="30" fill="none" stroke="#1e1e2e" stroke-width="5"/>
+        <circle id="progressArc" cx="36" cy="36" r="30" fill="none" stroke="url(#pgGrad)" stroke-width="5" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" style="transition:stroke-dashoffset .4s ease;"/>
+        <defs><linearGradient id="pgGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#e94560"/><stop offset="100%" stop-color="#f97316"/></linearGradient></defs>
+        <text id="progressPct" x="36" y="41" text-anchor="middle" fill="#e8e6f0" font-size="13" font-weight="900" style="transform:rotate(90deg);transform-origin:36px 36px;">0%</text>
+      </svg>
+    </div>
+
+    <!-- Exercise List -->
+    <div id="exerciseList" style="display:flex;flex-direction:column;gap:12px;"></div>
+
+    <!-- Complete Button Area -->
+    <div style="margin-top:26px;text-align:center;" id="completeArea"></div>
+  </div>
+
+  <!-- Progress Tab -->
+  <div id="progressTab" class="page-wrap" style="display:none;">
+    <div style="font-weight:900;font-size:24px;margin-bottom:2px;">Your Progress</div>
+    <div id="progressGreeting" style="color:#555;font-size:13px;margin-bottom:22px;"></div>
+    <div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;"></div>
+    <div id="weeklyOverview" class="card" style="margin-bottom:16px;"></div>
+    <div id="historySection"></div>
+    <div id="subscriptionCard"></div>
+  </div>
+</div>
+
 <script>
-    // ============ DATA STORAGE ============
-    let adminCredentials = {
-        email: 'mudassirabbas4786@gmail.com',
-        password: 'Mud786@@'
-    };
- 
-    let blogs = [];
-    let isAdminLoggedIn = false;
- 
-    // Load data from localStorage
-    function loadData() {
-        const storedBlogs = localStorage.getItem('blogs');
-        if (storedBlogs) {
-            blogs = JSON.parse(storedBlogs);
-        }
-    }
- 
-    function saveBlogs() {
-        localStorage.setItem('blogs', JSON.stringify(blogs));
-    }
- 
-    // ============ PAGE INITIALIZATION ============
-    window.addEventListener('load', () => {
-        loadData();
-        checkIfAdmin();
-        if (!isAdminLoggedIn) {
-            loadPublicBlogs();
-        }
+// ═══════════════════════ DATA ═══════════════════════
+const WORKOUT_DATA = {
+  Monday:   {focus:"Chest & Triceps",emoji:"💪",exercises:[
+    {id:1,name:"Barbell Bench Press",sets:4,reps:"8–10",muscle:"Chest",diff:"Intermediate",vid:"rT7DgCr-3pg",tip:"Keep shoulder blades retracted and feet flat on the floor."},
+    {id:2,name:"Incline Dumbbell Press",sets:3,reps:"10–12",muscle:"Upper Chest",diff:"Beginner",vid:"8iPEnn-ltC8",tip:"Set bench at 30–45°. Don't flare elbows excessively."},
+    {id:3,name:"Cable Fly",sets:3,reps:"12–15",muscle:"Chest",diff:"Beginner",vid:"WEM9FCIPlxQ",tip:"Control the eccentric. Slight forward lean for stretch."},
+    {id:4,name:"Tricep Rope Pushdown",sets:3,reps:"12–15",muscle:"Triceps",diff:"Beginner",vid:"vB5OHsJ3EME",tip:"Keep elbows pinned to sides. Fully extend at the bottom."},
+    {id:5,name:"Skull Crushers",sets:3,reps:"10–12",muscle:"Triceps",diff:"Intermediate",vid:"d_KZxkY_0cM",tip:"Lower bar to forehead slowly. Keep upper arms vertical."},
+  ]},
+  Tuesday:  {focus:"Back & Biceps",emoji:"🏋️",exercises:[
+    {id:6,name:"Deadlift",sets:4,reps:"5–6",muscle:"Full Back",diff:"Advanced",vid:"op9kVnSso6Q",tip:"Neutral spine, bar over mid-foot. Drive floor away."},
+    {id:7,name:"Lat Pulldown",sets:3,reps:"8–10",muscle:"Lats",diff:"Intermediate",vid:"sIiVZRb-OhE",tip:"Full hang at top. Pull elbows to hips."},
+    {id:8,name:"Seated Cable Row",sets:3,reps:"10–12",muscle:"Mid Back",diff:"Beginner",vid:"GZbfZ033f74",tip:"Chest up, slight lean back at end. Squeeze shoulder blades."},
+    {id:9,name:"Barbell Curl",sets:3,reps:"10–12",muscle:"Biceps",diff:"Beginner",vid:"ykJmrZ5v0Oo",tip:"No swinging. Supinate wrist at top."},
+    {id:10,name:"Hammer Curl",sets:3,reps:"12–15",muscle:"Brachialis",diff:"Beginner",vid:"zC3nLlEvin4",tip:"Neutral grip throughout."},
+  ]},
+  Wednesday:{focus:"Active Recovery",emoji:"🧘",exercises:[
+    {id:11,name:"Foam Rolling",sets:1,reps:"10 min",muscle:"Full Body",diff:"Beginner",vid:"qlqBWuV4EaE",tip:"Spend 60 sec on each sore area. Breathe deeply."},
+    {id:12,name:"Hip Flexor Stretch",sets:3,reps:"30 sec",muscle:"Hips",diff:"Beginner",vid:"YQmpO9VT2X4",tip:"Posterior pelvic tilt. Engage glute of rear leg."},
+    {id:13,name:"Band Pull-Aparts",sets:3,reps:"20",muscle:"Rear Delts",diff:"Beginner",vid:"W-oCHgJp0T0",tip:"Keep arms straight. Pinch shoulder blades."},
+    {id:14,name:"Yoga Flow",sets:1,reps:"15 min",muscle:"Full Body",diff:"Beginner",vid:"v7AYKMP6rOE",tip:"Sun salutation sequence. Focus on breath."},
+  ]},
+  Thursday: {focus:"Shoulders & Abs",emoji:"🎯",exercises:[
+    {id:15,name:"Overhead Press",sets:4,reps:"6–8",muscle:"Shoulders",diff:"Intermediate",vid:"2yjwXTZQDDI",tip:"Brace core hard. Bar path slightly back."},
+    {id:16,name:"Lateral Raises",sets:4,reps:"12–15",muscle:"Side Delts",diff:"Beginner",vid:"3VcKaXpzqRo",tip:"Slight forward lean. Pinky higher than thumb."},
+    {id:17,name:"Face Pulls",sets:3,reps:"15–20",muscle:"Rear Delts",diff:"Beginner",vid:"rep-qVOkqgk",tip:"Pull to nose level. External rotation at end."},
+    {id:18,name:"Cable Crunch",sets:3,reps:"15–20",muscle:"Abs",diff:"Beginner",vid:"2fbujeH3F0E",tip:"Round spine into crunch. Don't pull with arms."},
+    {id:19,name:"Hanging Leg Raise",sets:3,reps:"10–15",muscle:"Lower Abs",diff:"Intermediate",vid:"Pr1ieGZ5atk",tip:"No swinging. Control descent."},
+  ]},
+  Friday:   {focus:"Legs & Glutes",emoji:"🦵",exercises:[
+    {id:20,name:"Barbell Back Squat",sets:4,reps:"6–8",muscle:"Quads/Glutes",diff:"Advanced",vid:"ultWZbUMPL8",tip:"Depth below parallel. Knees track toes."},
+    {id:21,name:"Romanian Deadlift",sets:3,reps:"10–12",muscle:"Hamstrings",diff:"Intermediate",vid:"2SHsk9AzdjA",tip:"Bar stays on legs. Push hips back."},
+    {id:22,name:"Leg Press",sets:3,reps:"12–15",muscle:"Quads",diff:"Beginner",vid:"IZxyjW7MPJQ",tip:"Feet hip-width. Don't lock knees."},
+    {id:23,name:"Hip Thrust",sets:4,reps:"12–15",muscle:"Glutes",diff:"Beginner",vid:"xDmFkJxPzeM",tip:"Chin tucked. Squeeze glutes hard at top."},
+    {id:24,name:"Leg Curl",sets:3,reps:"12–15",muscle:"Hamstrings",diff:"Beginner",vid:"ELOCsoDSmrg",tip:"Curl fully to 90°. Control the negative."},
+  ]},
+  Saturday: {focus:"Full Body Power",emoji:"⚡",exercises:[
+    {id:25,name:"Power Clean",sets:4,reps:"4–5",muscle:"Full Body",diff:"Advanced",vid:"RkqFOEFMZaI",tip:"Triple extension — ankles, knees, hips."},
+    {id:26,name:"Push Press",sets:3,reps:"6–8",muscle:"Shoulders",diff:"Intermediate",vid:"iaBVSJm78ko",tip:"Dip 1–2 inches, drive with legs."},
+    {id:27,name:"Weighted Dips",sets:3,reps:"8–10",muscle:"Chest/Triceps",diff:"Intermediate",vid:"yN6Q1UI_xkE",tip:"Slight forward lean for chest."},
+    {id:28,name:"Farmer's Carry",sets:4,reps:"30m",muscle:"Core/Grip",diff:"Beginner",vid:"Fkzk_RqlYig",tip:"Tall posture, neutral spine."},
+  ]},
+  Sunday:   {focus:"Rest Day",emoji:"😴",exercises:[
+    {id:29,name:"Light Walk",sets:1,reps:"20–30 min",muscle:"Cardiovascular",diff:"Beginner",vid:"njeZ29umqVE",tip:"Zone 2 pace. Let your body recover."},
+    {id:30,name:"Meditation",sets:1,reps:"10 min",muscle:"Mind",diff:"Beginner",vid:"inpok4MKVLM",tip:"4-7-8 breathing. Reduces cortisol."},
+  ]},
+};
+
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const DIFF_COLOR = {Beginner:"#4ade80",Intermediate:"#facc15",Advanced:"#f87171"};
+const ADMIN_PASS = "admin123";
+const SUB_DAYS = 30;
+const SUB_PRICE = 300;
+
+// ═══════════════════════ STATE ═══════════════════════
+let members = JSON.parse(localStorage.getItem("ff_members") || "{}");
+let currentUser = JSON.parse(localStorage.getItem("ff_current") || "null");
+let activeDay = DAYS[new Date().getDay()===0?6:new Date().getDay()-1];
+let timers = {}; // exId -> {running,elapsed,base,startTs}
+let timerRAF = null;
+let openVideoId = null;
+let completedSets = {};
+let completedWorkouts = {};
+let workoutHistory = {};
+
+// ═══════════════════════ HELPERS ═══════════════════════
+const saveMembers = () => localStorage.setItem("ff_members", JSON.stringify(members));
+const saveCurrent = () => localStorage.setItem("ff_current", JSON.stringify(currentUser));
+const isActive = m => m && m.subEnd && new Date(m.subEnd) > new Date();
+const daysLeft = m => {if(!m||!m.subEnd)return 0; return Math.max(0,Math.ceil((new Date(m.subEnd)-new Date())/86400000));};
+const fmtMs = ms => {const s=Math.floor(ms/1000),m=Math.floor(s/60),sec=s%60;return `${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;};
+const todayStr = () => new Date().toISOString().split("T")[0];
+const todayName = () => DAYS[new Date().getDay()===0?6:new Date().getDay()-1];
+
+function show(id){document.querySelectorAll(".screen").forEach(s=>{s.classList.remove("active");s.style.display="none";});const el=document.getElementById(id);el.style.display="block";el.classList.add("active");}
+
+function persistWorkout(){
+  if(!currentUser)return;
+  members[currentUser.phone].completedSets = completedSets;
+  members[currentUser.phone].completedWorkouts = completedWorkouts;
+  members[currentUser.phone].workoutHistory = workoutHistory;
+  saveMembers();
+}
+
+// ═══════════════════════ SPLASH ═══════════════════════
+window.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("appLinkText").textContent = window.location.href;
+  setTimeout(()=>{
+    if(currentUser){
+      const m = members[currentUser.phone];
+      if(m && isActive(m)){loadUserData(m);showMemberApp();}
+      else{showExpiredModal();show("loginScreen");}
+    } else {show("loginScreen");}
+  },1600);
+});
+
+// ═══════════════════════ TIMER RAF ═══════════════════════
+function startTimerLoop(){
+  if(timerRAF)cancelAnimationFrame(timerRAF);
+  function loop(){
+    let changed=false;
+    Object.keys(timers).forEach(id=>{
+      const t=timers[id];
+      if(t&&t.running){
+        const el=t.base+(Date.now()-t.startTs);
+        if(Math.floor(el/100)!==Math.floor(t.elapsed/100)){timers[id].elapsed=el;changed=true;}
+      }
     });
- 
-    // ============ CHECK ADMIN LOGIN STATUS ============
-    function checkIfAdmin() {
-        const adminLogged = localStorage.getItem('adminLoggedIn');
-        if (adminLogged === 'true') {
-            isAdminLoggedIn = true;
-            document.getElementById('publicContainer').style.display = 'none';
-            document.getElementById('adminLoginContainer').style.display = 'none';
-            document.getElementById('adminDashboard').classList.add('active');
-            loadDashboard();
-        } else {
-            document.getElementById('publicContainer').classList.add('active');
-            document.getElementById('adminLoginContainer').style.display = 'none';
-        }
+    if(changed)updateAllTimerDisplays();
+    timerRAF=requestAnimationFrame(loop);
+  }
+  timerRAF=requestAnimationFrame(loop);
+}
+startTimerLoop();
+
+function updateAllTimerDisplays(){
+  Object.keys(timers).forEach(id=>{
+    const el=document.getElementById("timerDisp_"+id);
+    const t=timers[id];
+    if(el&&t){
+      el.textContent=fmtMs(t.elapsed||0);
+      el.className="timer-disp "+(t.running?"running":t.elapsed>0?"paused":"idle");
     }
- 
-    // ============ ADMIN LOGIN ============
-    function handleAdminLogin(event) {
-        event.preventDefault();
- 
-        const email = document.getElementById('adminEmail').value;
-        const password = document.getElementById('adminPassword').value;
- 
-        if (email === adminCredentials.email && password === adminCredentials.password) {
-            isAdminLoggedIn = true;
-            localStorage.setItem('adminLoggedIn', 'true');
-            document.getElementById('publicContainer').classList.remove('active');
-            document.getElementById('adminLoginContainer').style.display = 'none';
-            document.getElementById('adminDashboard').classList.add('active');
-            loadDashboard();
-        } else {
-            alert('❌ Invalid admin credentials!');
-        }
+  });
+}
+
+function toggleTimer(id){
+  const t=timers[id];
+  if(!t||!t.startTs){timers[id]={running:true,elapsed:0,base:0,startTs:Date.now()};}
+  else if(t.running){timers[id]={...t,running:false,base:t.elapsed};}
+  else{timers[id]={...t,running:true,startTs:Date.now()};}
+  const btn=document.getElementById("timerBtn_"+id);
+  if(btn){
+    const t2=timers[id];
+    btn.textContent=t2.running?"⏸ Pause":t2.elapsed>0?"▶ Resume":"▶ Start";
+    btn.style.background=t2.running?"#1a1200":"linear-gradient(135deg,#f97316,#facc15)";
+    btn.style.color=t2.running?"#f97316":"#0a0a0a";
+  }
+  const resetBtn=document.getElementById("timerReset_"+id);
+  if(resetBtn)resetBtn.style.display=(timers[id]&&timers[id].elapsed>0&&!timers[id].running)?"inline-block":"none";
+}
+
+function resetTimer(id){
+  timers[id]=null;
+  const el=document.getElementById("timerDisp_"+id);
+  if(el){el.textContent="00:00";el.className="timer-disp idle";}
+  const btn=document.getElementById("timerBtn_"+id);
+  if(btn){btn.textContent="▶ Start";btn.style.background="linear-gradient(135deg,#f97316,#facc15)";btn.style.color="#0a0a0a";}
+  const rb=document.getElementById("timerReset_"+id);
+  if(rb)rb.style.display="none";
+}
+
+// ═══════════════════════ SET TRACKING ═══════════════════════
+function toggleSet(exId,setIdx){
+  const key=`${activeDay}-${exId}-${setIdx}`;
+  completedSets[key]=!completedSets[key];
+  const btn=document.getElementById(`set_${exId}_${setIdx}`);
+  if(btn){
+    if(completedSets[key]){btn.classList.add("done");btn.textContent="✓";}
+    else{btn.classList.remove("done");btn.textContent=setIdx+1;}
+  }
+  // Auto start timer on first set
+  if(completedSets[key]&&setIdx===0&&(!timers[exId]||!timers[exId].running)){
+    timers[exId]={running:true,elapsed:0,base:0,startTs:Date.now()};
+  }
+  updateProgress();
+  persistWorkout();
+}
+
+function allSetsDone(ex){
+  return Array.from({length:ex.sets},(_,i)=>i).every(i=>completedSets[`${activeDay}-${ex.id}-${i}`]);
+}
+
+function updateProgress(){
+  const exercises=WORKOUT_DATA[activeDay].exercises;
+  const total=exercises.reduce((a,e)=>a+e.sets,0);
+  const done=exercises.reduce((a,e)=>a+Array.from({length:e.sets},(_,i)=>i).filter(i=>completedSets[`${activeDay}-${e.id}-${i}`]).length,0);
+  const pct=total>0?Math.round(done/total*100):0;
+  const circ=2*Math.PI*30;
+  document.getElementById("progressArc").style.strokeDashoffset=circ*(1-pct/100);
+  document.getElementById("progressPct").textContent=pct+"%";
+
+  // Update exercise card borders for completed
+  exercises.forEach(ex=>{
+    const card=document.getElementById("exCard_"+ex.id);
+    if(card){
+      if(allSetsDone(ex)){card.className="card card-active";}
+      else{card.className="card";}
+      const numEl=document.getElementById("exNum_"+ex.id);
+      if(numEl){
+        if(allSetsDone(ex)){numEl.textContent="✓";numEl.style.background="#4ade80";numEl.style.color="#0a0a0a";}
+        else{numEl.textContent=exercises.indexOf(ex)+1;numEl.style.background="linear-gradient(135deg,#e94560,#f97316)";numEl.style.color="#fff";}
+      }
     }
- 
-    function showAdminLogin() {
-        document.getElementById('publicContainer').classList.remove('active');
-        document.getElementById('adminLoginContainer').style.display = 'flex';
+  });
+
+  // Complete button
+  const ca=document.getElementById("completeArea");
+  if(completedWorkouts[activeDay]){
+    ca.innerHTML=`<div class="complete-banner">🎉 Workout Complete! Great job today!</div>`;
+  } else if(pct===100){
+    ca.innerHTML=`<button class="btn-primary" onclick="markComplete()" style="max-width:300px;margin:0 auto;display:block;box-shadow:0 8px 30px rgba(233,69,96,.4);">✅ Mark Workout Complete</button>`;
+  } else {
+    ca.innerHTML=`<button style="padding:13px 40px;border-radius:50px;border:none;background:#1a1a2a;color:#333;font-weight:800;font-size:14px;cursor:not-allowed;">Complete all sets (${pct}%)</button>`;
+  }
+}
+
+function markComplete(){
+  completedWorkouts[activeDay]=true;
+  const wh={};wh[todayStr()]={day:activeDay,focus:WORKOUT_DATA[activeDay].focus,sets:getSetsCount().done,total:getSetsCount().total};
+  workoutHistory=Object.assign({},workoutHistory,wh);
+  persistWorkout();
+  updateProgress();
+  renderDaySelector();
+}
+
+function getSetsCount(){
+  const exs=WORKOUT_DATA[activeDay].exercises;
+  const total=exs.reduce((a,e)=>a+e.sets,0);
+  const done=exs.reduce((a,e)=>a+Array.from({length:e.sets},(_,i)=>i).filter(i=>completedSets[`${activeDay}-${e.id}-${i}`]).length,0);
+  return{total,done};
+}
+
+// ═══════════════════════ VIDEO ═══════════════════════
+function toggleVideo(exId){
+  const wrap=document.getElementById("videoWrap_"+exId);
+  if(!wrap)return;
+  if(openVideoId===exId){
+    wrap.style.display="none";openVideoId=null;
+  } else {
+    if(openVideoId){
+      const prev=document.getElementById("videoWrap_"+openVideoId);
+      if(prev)prev.style.display="none";
+      // Remove autoplay from prev iframe
+      const pIf=prev&&prev.querySelector("iframe");
+      if(pIf)pIf.src=pIf.src;
     }
- 
-    function handleAdminLogout() {
-        if (confirm('Are you sure you want to logout?')) {
-            isAdminLoggedIn = false;
-            localStorage.setItem('adminLoggedIn', 'false');
-            document.getElementById('adminDashboard').classList.remove('active');
-            document.getElementById('adminLoginContainer').style.display = 'flex';
-            document.getElementById('adminEmail').value = '';
-            document.getElementById('adminPassword').value = '';
-        }
-    }
- 
-    // ============ ADMIN TAB SWITCHING ============
-    function switchAdminTab(tab) {
-        document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.admin-nav-btn').forEach(el => el.classList.remove('active'));
- 
-        document.getElementById(tab + 'Tab').classList.add('active');
-        event.target.classList.add('active');
-    }
- 
-    // ============ UPLOAD BLOG ============
-    function handleUploadBlog(event) {
-        event.preventDefault();
- 
-        const title = document.getElementById('blogTitle').value;
-        const category = document.getElementById('blogCategory').value;
-        const content = document.getElementById('blogContent').value;
- 
-        const newBlog = {
-            id: Date.now(),
-            title: title,
-            category: category,
-            content: content,
-            author: 'Administrator',
-            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-            views: Math.floor(Math.random() * 1000)
-        };
- 
-        blogs.push(newBlog);
-        saveBlogs();
- 
-        document.getElementById('uploadTab').style.display = 'none';
-        document.getElementById('dashboardTab').style.display = 'block';
-        showSuccessMessage('Blog published successfully!');
- 
-        document.getElementById('blogTitle').value = '';
-        document.getElementById('blogCategory').value = '';
-        document.getElementById('blogContent').value = '';
- 
-        loadDashboard();
-        loadBlogsList();
-    }
- 
-    // ============ LOAD PUBLIC BLOGS ============
-    function loadPublicBlogs() {
-        const blogsGrid = document.getElementById('blogsGrid');
-        blogsGrid.innerHTML = '';
- 
-        if (blogs.length === 0) {
-            document.getElementById('noBlogsMessage').style.display = 'block';
-            return;
-        }
- 
-        document.getElementById('noBlogsMessage').style.display = 'none';
- 
-        blogs.slice().reverse().forEach(blog => {
-            const blogCard = document.createElement('div');
-            blogCard.className = 'blog-card';
-            blogCard.innerHTML = `
-                <div class="blog-card-header">
-                    <div class="blog-category">${blog.category}</div>
-                    <h2 class="blog-card-title">${blog.title}</h2>
-                    <div class="blog-card-meta">
-                        <span>📅 ${blog.date}</span> | 
-                        <span>👁️ ${blog.views} views</span>
-                    </div>
-                </div>
-                <div class="blog-card-body">
-                    <div class="blog-author">
-                        <div class="blog-author-avatar">${blog.author.charAt(0)}</div>
-                        <div class="blog-author-info">
-                            <h4>${blog.author}</h4>
-                            <p>Professional Writer</p>
-                        </div>
-                    </div>
-                    <p class="blog-excerpt">${blog.content.substring(0, 150)}...</p>
-                    <a href="javascript:void(0)" class="read-more-btn">Read Full Article →</a>
-                </div>
-            `;
-            blogsGrid.appendChild(blogCard);
-        });
-    }
- 
-    // ============ LOAD ADMIN BLOGS LIST ============
-    function loadBlogsList() {
-        const blogsList = document.getElementById('blogsList');
-        blogsList.innerHTML = '';
- 
-        if (blogs.length === 0) {
-            blogsList.innerHTML = '<div style="padding: 40px; text-align: center; color: #7f8c8d;">No blogs published yet. Create your first blog!</div>';
-            return;
-        }
- 
-        blogs.slice().reverse().forEach((blog, index) => {
-            const blogItem = document.createElement('div');
-            blogItem.className = 'blog-item';
-            blogItem.innerHTML = `
-                <div class="blog-item-info">
-                    <h3>${blog.title}</h3>
-                    <div class="blog-item-meta">
-                        <span>Category: ${blog.category}</span> | 
-                        <span>Date: ${blog.date}</span> | 
-                        <span>Views: ${blog.views}</span>
-                    </div>
-                </div>
-                <button class="delete-btn" onclick="deleteBlog(${blog.id})">🗑️ Delete</button>
-            `;
-            blogsList.appendChild(blogItem);
-        });
-    }
- 
-    function deleteBlog(blogId) {
-        if (confirm('Are you sure you want to delete this blog?')) {
-            blogs = blogs.filter(blog => blog.id !== blogId);
-            saveBlogs();
-            loadBlogsList();
-            loadPublicBlogs();
-            loadDashboard();
-            showSuccessMessage('Blog deleted successfully!');
-        }
-    }
- 
-    // ============ LOAD DASHBOARD ============
-    function loadDashboard() {
-        document.getElementById('totalBlogsCount').textContent = blogs.length;
-        document.getElementById('totalViewsCount').textContent = blogs.reduce((sum, blog) => sum + blog.views, 0);
- 
-        const thisMonth = blogs.filter(blog => {
-            const blogDate = new Date(blog.date);
-            const today = new Date();
-            return blogDate.getMonth() === today.getMonth() && blogDate.getFullYear() === today.getFullYear();
-        }).length;
-        document.getElementById('lastPublishedCount').textContent = thisMonth;
- 
-        generatePublicLink();
-        loadBlogsList();
-    }
- 
-    // ============ PUBLIC LINK GENERATION ============
-    function generatePublicLink() {
-        const baseUrl = window.location.origin + window.location.pathname;
-        const publicLink = baseUrl + '?view=public';
-        document.getElementById('publicLinkDisplay').textContent = publicLink;
-    }
- 
-    function copyPublicLink() {
-        const link = document.getElementById('publicLinkDisplay').textContent;
-        navigator.clipboard.writeText(link).then(() => {
-            showSuccessMessage('Link copied to clipboard! 📋');
-        }).catch(() => {
-            alert('Failed to copy. Please copy manually.');
-        });
-    }
- 
-    // ============ CHANGE PASSWORD ============
-    function handleChangePassword(event) {
-        event.preventDefault();
- 
-        const currentPassword = document.getElementById('currentPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
- 
-        if (currentPassword !== adminCredentials.password) {
-            alert('❌ Current password is incorrect!');
-            return;
-        }
- 
-        if (newPassword !== confirmPassword) {
-            alert('❌ Passwords do not match!');
-            return;
-        }
- 
-        if (newPassword.length < 6) {
-            alert('❌ Password must be at least 6 characters!');
-            return;
-        }
- 
-        adminCredentials.password = newPassword;
-        localStorage.setItem('adminPassword', newPassword);
- 
-        document.getElementById('currentPassword').value = '';
-        document.getElementById('newPassword').value = '';
-        document.getElementById('confirmPassword').value = '';
- 
-        showSuccessMessage('Password updated successfully! 🔐');
-    }
- 
-    // ============ SUCCESS MESSAGE ============
-    function showSuccessMessage(message) {
-        const successMsg = document.getElementById('successMessage');
-        successMsg.textContent = message;
-        successMsg.classList.add('show');
-        setTimeout(() => {
-            successMsg.classList.remove('show');
-        }, 3000);
-    }
+    wrap.style.display="block";openVideoId=exId;
+    const vid=WORKOUT_DATA[activeDay].exercises.find(e=>e.id===exId);
+    if(vid){wrap.querySelector("iframe").src=`https://www.youtube.com/embed/${vid.vid}?autoplay=1&rel=0`;}
+  }
+}
+
+// ═══════════════════════ RENDER WORKOUT ═══════════════════════
+function renderWorkout(){
+  const wk=WORKOUT_DATA[activeDay];
+  document.getElementById("workoutTitle").textContent=`${wk.emoji} ${wk.focus}`;
+  document.getElementById("workoutMeta").textContent=`${wk.exercises.length} exercises · ${wk.exercises.reduce((a,e)=>a+e.sets,0)} sets`;
+
+  const list=document.getElementById("exerciseList");
+  list.innerHTML="";
+  wk.exercises.forEach((ex,idx)=>{
+    const done=allSetsDone(ex);
+    const setsBtns=Array.from({length:ex.sets},(_,i)=>`
+      <button class="set-btn${completedSets[activeDay+"-"+ex.id+"-"+i]?" done":""}" id="set_${ex.id}_${i}" onclick="toggleSet(${ex.id},${i})">
+        ${completedSets[activeDay+"-"+ex.id+"-"+i]?"✓":i+1}
+      </button>
+    `).join("");
+
+    const diffClass=ex.diff.toLowerCase();
+    const t=timers[ex.id];
+    const tMs=t?t.elapsed:0;
+    const tRun=t&&t.running;
+
+    list.innerHTML+=`
+    <div class="card${done?" card-active":""}" id="exCard_${ex.id}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px;">
+            <span id="exNum_${ex.id}" style="width:20px;height:20px;border-radius:50%;${done?"background:#4ade80;color:#0a0a0a":"background:linear-gradient(135deg,#e94560,#f97316);color:#fff"};display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex-shrink:0;">${done?"✓":idx+1}</span>
+            <span style="font-weight:700;font-size:14px;">${ex.name}</span>
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;">
+            <span class="badge">${ex.muscle}</span>
+            <span class="badge ${diffClass}" style="color:${DIFF_COLOR[ex.diff]}">${ex.diff}</span>
+            <span class="badge">${ex.sets}×${ex.reps}</span>
+          </div>
+          <div style="font-size:11px;color:#555;font-style:italic;line-height:1.4;">💡 ${ex.tip}</div>
+        </div>
+        <button onclick="toggleVideo(${ex.id})" style="width:70px;height:50px;border-radius:9px;border:none;background:#1a1a2a;overflow:hidden;flex-shrink:0;position:relative;padding:0;cursor:pointer;">
+          <img src="https://img.youtube.com/vi/${ex.vid}/mqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;">
+            <div style="width:20px;height:20px;border-radius:50%;background:#e94560;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">▶</div>
+          </div>
+          <div style="position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:8px;color:rgba(255,255,255,.7);">Demo</div>
+        </button>
+      </div>
+
+      <!-- Video Embed -->
+      <div class="video-wrap" id="videoWrap_${ex.id}" style="display:none;">
+        <iframe src="" title="${ex.name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowfullscreen></iframe>
+      </div>
+
+      <!-- Timer -->
+      <div style="margin-top:10px;background:#080814;border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:10px;border:1px solid #141422;">
+        <div style="flex:1;">
+          <div style="font-size:9px;color:#444;letter-spacing:1px;margin-bottom:1px;">EXERCISE TIMER</div>
+          <div class="timer-disp ${tRun?"running":tMs>0?"paused":"idle"}" id="timerDisp_${ex.id}">${fmtMs(tMs)}</div>
+        </div>
+        <button id="timerBtn_${ex.id}" onclick="toggleTimer(${ex.id})" style="padding:6px 14px;border-radius:18px;border:none;font-weight:700;font-size:11px;cursor:pointer;${tRun?"background:#1a1200;color:#f97316":"background:linear-gradient(135deg,#f97316,#facc15);color:#0a0a0a"};transition:all .2s;">
+          ${tRun?"⏸ Pause":tMs>0?"▶ Resume":"▶ Start"}
+        </button>
+        <button id="timerReset_${ex.id}" onclick="resetTimer(${ex.id})" style="display:${tMs>0&&!tRun?"inline-block":"none"};padding:6px 10px;border-radius:18px;border:none;background:#1a1a2a;color:#555;font-size:10px;cursor:pointer;">↺</button>
+      </div>
+
+      <!-- Sets -->
+      <div style="margin-top:10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
+        <span style="font-size:11px;color:#444;margin-right:2px;">Sets:</span>
+        ${setsBtns}
+      </div>
+    </div>`;
+  });
+
+  updateProgress();
+}
+
+// ═══════════════════════ DAY SELECTOR ═══════════════════════
+function renderDaySelector(){
+  const todayN=todayName();
+  const row=document.getElementById("daySelectorRow");
+  row.innerHTML="";
+  DAYS.forEach(day=>{
+    const done=completedWorkouts[day];
+    const isA=day===activeDay;
+    const isT=day===todayN;
+    let cls="day-btn";
+    if(isA)cls+=" active";
+    else if(done)cls+=" done";
+    else if(isT)cls+=" today-border";
+    row.innerHTML+=`
+    <button class="${cls}" onclick="changeDay('${day}')">
+      ${done&&!isA?'<span style="font-size:8px;position:absolute;top:3px;right:4px;">✓</span>':''}
+      <div style="font-size:15px;margin-bottom:2px;position:relative;">${WORKOUT_DATA[day].emoji}</div>
+      <div>${day.slice(0,3).toUpperCase()}</div>
+      ${isT?`<div style="font-size:7px;color:${isA?"rgba(255,255,255,.7)":"#e94560"};margin-top:1px;">TODAY</div>`:''}
+    </button>`;
+  });
+}
+
+function changeDay(day){
+  activeDay=day;
+  openVideoId=null;
+  renderDaySelector();
+  renderWorkout();
+}
+
+// ═══════════════════════ PROGRESS TAB ═══════════════════════
+function renderProgress(){
+  const m=members[currentUser.phone];
+  document.getElementById("progressGreeting").textContent=`Welcome back, ${currentUser.name} 👋`;
+
+  // Stats
+  const cwCount=Object.keys(completedWorkouts).length;
+  const histCount=Object.keys(workoutHistory).length;
+  document.getElementById("progressStats").innerHTML=`
+    <div class="card" style="text-align:center;"><div style="font-size:20px;margin-bottom:3px;">🏅</div><div style="font-weight:900;font-size:20px;">${cwCount}/7</div><div style="font-size:9px;color:#555;margin-top:2px;">Days Done</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:20px;margin-bottom:3px;">📅</div><div style="font-weight:900;font-size:20px;">${histCount}</div><div style="font-size:9px;color:#555;margin-top:2px;">Sessions</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:20px;margin-bottom:3px;">🔥</div><div style="font-weight:900;font-size:20px;">${cwCount}d</div><div style="font-size:9px;color:#555;margin-top:2px;">Active Days</div></div>
+  `;
+
+  // Weekly
+  const todayN=todayName();
+  let wHTML=`<div style="font-weight:700;margin-bottom:12px;font-size:14px;">This Week</div>`;
+  DAYS.forEach(day=>{
+    const done=completedWorkouts[day];
+    const isT=day===todayN;
+    wHTML+=`
+    <div style="display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:9px;background:${isT?"#110e20":"transparent"};margin-bottom:3px;">
+      <div style="width:30px;height:30px;border-radius:7px;flex-shrink:0;${done?"background:linear-gradient(135deg,#4ade80,#22c55e)":"background:#1a1a2a"};display:flex;align-items:center;justify-content:center;font-size:13px;">${done?"✓":WORKOUT_DATA[day].emoji}</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:12px;">${day} ${isT?'<span style="font-size:8px;padding:1px 5px;border-radius:99px;background:#e94560;color:#fff;">TODAY</span>':''}</div>
+        <div style="font-size:10px;color:#555;">${WORKOUT_DATA[day].focus}</div>
+      </div>
+      <span style="font-size:11px;font-weight:600;color:${done?"#4ade80":"#333"}">${done?"Done ✓":"—"}</span>
+    </div>`;
+  });
+  document.getElementById("weeklyOverview").innerHTML=wHTML;
+
+  // History
+  const entries=Object.entries(workoutHistory).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12);
+  if(entries.length>0){
+    let hHTML=`<div class="card" style="margin-bottom:16px;"><div style="font-weight:700;margin-bottom:12px;font-size:14px;">Workout History</div>`;
+    entries.forEach(([date,wk])=>{
+      const d=new Date(date).toLocaleDateString("en-IN",{day:"numeric",month:"short"});
+      hHTML+=`<div class="hist-row"><span style="color:#666;min-width:65px;">${d}</span><span style="font-weight:600;flex:1;text-align:center;">${wk.focus}</span><span style="color:#f97316;font-weight:700;">${wk.sets}/${wk.total}</span></div>`;
+    });
+    hHTML+="</div>";
+    document.getElementById("historySection").innerHTML=hHTML;
+  } else {
+    document.getElementById("historySection").innerHTML="";
+  }
+
+  // Sub card
+  const dl=daysLeft(m);
+  const wc=dl<=3?"#e94560":dl<=7?"#facc15":"#4ade80";
+  document.getElementById("subscriptionCard").innerHTML=`
+    <div style="background:linear-gradient(135deg,#150810,#150d06);border-radius:16px;padding:16px 18px;border:1px solid #2a1818;">
+      <div style="font-weight:700;margin-bottom:8px;font-size:14px;">📋 My Subscription</div>
+      <div style="font-size:13px;color:#888;margin-bottom:4px;">Plan: Monthly &nbsp;·&nbsp; ₹${SUB_PRICE}/month</div>
+      <div style="font-size:13px;">Status: <span style="color:${wc};font-weight:700;">${dl>0?`Active — ${dl} days remaining`:"Expired"}</span></div>
+      ${m.subEnd?`<div style="font-size:11px;color:#555;margin-top:4px;">Expires: ${new Date(m.subEnd).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})}</div>`:""}
+      ${dl<=7&&dl>0?`<div style="margin-top:10px;font-size:12px;color:${wc};">⚠️ Contact your admin to renew before expiry.</div>`:""}
+      ${dl===0?`<div style="margin-top:10px;font-size:12px;color:#e94560;">🔒 Access blocked. Contact admin to restore.</div>`:""}
+    </div>`;
+}
+
+function switchTab(tab){
+  document.getElementById("workoutTab").style.display=tab==="workout"?"block":"none";
+  document.getElementById("progressTab").style.display=tab==="progress"?"block":"none";
+  document.getElementById("tabWorkout").className="btn-tab"+(tab==="workout"?" active":"");
+  document.getElementById("tabProgress").className="btn-tab"+(tab==="progress"?" active":"");
+  if(tab==="progress")renderProgress();
+}
+
+// ═══════════════════════ AUTH ═══════════════════════
+function doLogin(){
+  const phone=document.getElementById("loginPhone").value.trim();
+  const pin=document.getElementById("loginPin").value.trim();
+  const errEl=document.getElementById("loginError");
+  const m=members[phone];
+  if(!m){showLoginError("Member not found. Apne gym admin se contact karein.");return;}
+  if(m.pin!==pin){showLoginError("PIN galat hai. Dobara try karein.");return;}
+  if(!isActive(m)){showLoginError(""); showExpiredModal();return;}
+  currentUser={name:m.name,phone};
+  saveCurrent();
+  loadUserData(m);
+  showMemberApp();
+}
+
+function showLoginError(msg){
+  const el=document.getElementById("loginError");
+  el.textContent=msg;el.style.display="block";
+  el.classList.add("shake");setTimeout(()=>el.classList.remove("shake"),400);
+}
+
+function doAdminLogin(){
+  const pass=document.getElementById("adminPassInput").value;
+  if(pass===ADMIN_PASS){
+    document.getElementById("adminPassInput").value="";
+    document.getElementById("adminError").style.display="none";
+    renderAdminPanel();
+    show("adminScreen");
+  } else {
+    const el=document.getElementById("adminError");
+    el.textContent="Wrong password. Admin password is: admin123";el.style.display="block";
+  }
+}
+
+function memberLogout(){currentUser=null;localStorage.removeItem("ff_current");show("loginScreen");}
+function adminLogout(){show("loginScreen");}
+function loadUserData(m){completedSets=m.completedSets||{};completedWorkouts=m.completedWorkouts||{};workoutHistory=m.workoutHistory||{};}
+
+function showMemberApp(){
+  const m=members[currentUser.phone];
+  const dl=daysLeft(m);
+  const wc=dl<=3?"#e94560":dl<=7?"#facc15":"#4ade80";
+  document.getElementById("subStatusBar").textContent=dl<=3?`⚠️ ${dl}d left!`:dl<=7?`⏰ ${dl} days left`:`✅ ${dl} days left`;
+  document.getElementById("subStatusBar").style.color=wc;
+
+  // Subscription warning banner
+  const wb=document.getElementById("subWarnBanner");
+  if(dl<=7&&dl>0){
+    wb.innerHTML=`<div class="warn-banner ${dl<=3?"warn-red":"warn-yellow"}">${dl<=3?"🚨":"⚠️"} Subscription ${dl} din mein expire hogi! Admin se contact karein.</div>`;
+  } else {wb.innerHTML="";}
+
+  renderDaySelector();
+  renderWorkout();
+  show("memberScreen");
+}
+
+function showExpiredModal(){document.getElementById("expiredModal").style.display="flex";}
+function closeExpiredModal(){document.getElementById("expiredModal").style.display="none";}
+function showAdminLoginForm(){document.getElementById("memberLoginForm").style.display="none";document.getElementById("adminLoginForm").style.display="flex";}
+function showMemberLoginForm(){document.getElementById("adminLoginForm").style.display="none";document.getElementById("memberLoginForm").style.display="flex";}
+
+// ═══════════════════════ ADMIN ═══════════════════════
+function renderAdminPanel(){
+  const list=Object.values(members);
+  document.getElementById("adminStats").innerHTML=`
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">👥</div><div style="font-weight:900;font-size:22px;">${list.length}</div><div style="font-size:10px;color:#666;margin-top:2px;">Total</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">✅</div><div style="font-weight:900;font-size:22px;">${list.filter(m=>isActive(m)).length}</div><div style="font-size:10px;color:#666;margin-top:2px;">Active</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">⏰</div><div style="font-weight:900;font-size:22px;">${list.filter(m=>!isActive(m)).length}</div><div style="font-size:10px;color:#666;margin-top:2px;">Expired</div></div>
+  `;
+  renderMemberList();
+}
+
+function renderMemberList(){
+  const list=Object.values(members);
+  const ml=document.getElementById("memberList");
+  if(list.length===0){
+    ml.innerHTML=`<div style="color:#444;text-align:center;padding:48px;background:#0d0d1a;border-radius:16px;border:1px dashed #1e1e2e;"><div style="font-size:36px;margin-bottom:8px;">🏋️</div><div>No members yet. Add your first member above.</div></div>`;
+    return;
+  }
+  ml.innerHTML=list.map(m=>{
+    const act=isActive(m);
+    const dl=daysLeft(m);
+    const wc=dl<=3?"#e94560":dl<=7?"#facc15":"#4ade80";
+    const wkCount=Object.keys(m.workoutHistory||{}).length;
+    return `
+    <div style="background:#0d0d1a;border-radius:16px;padding:16px 18px;border:1px solid ${act?"#1a3a1a":"#3a1a1a"};margin-bottom:10px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;">
+          <div style="font-weight:800;font-size:15px;">${m.name}</div>
+          <div style="font-size:11px;color:#666;margin-top:3px;">📱 ${m.phone} &nbsp;·&nbsp; 🏋️ ${wkCount} sessions</div>
+          <div style="font-size:12px;margin-top:5px;">
+            ${act
+              ?`<span style="color:${wc};font-weight:700;">✅ Active — ${dl} days remaining</span>`
+              :`<span style="color:#e94560;font-weight:700;">🔒 Expired / Blocked</span>`
+            }
+          </div>
+          ${m.subEnd?`<div style="font-size:11px;color:#555;margin-top:3px;">Expires: ${new Date(m.subEnd).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})}</div>`:""}
+          ${m.joinDate?`<div style="font-size:10px;color:#444;margin-top:2px;">Joined: ${new Date(m.joinDate).toLocaleDateString("en-IN")}</div>`:""}
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="grantSub('${m.phone}')" style="padding:7px 14px;border-radius:20px;border:none;cursor:pointer;background:#1a3a1a;color:#4ade80;font-weight:700;font-size:12px;">+30 Days</button>
+          ${act?`<button onclick="revokeSub('${m.phone}')" style="padding:7px 14px;border-radius:20px;border:none;cursor:pointer;background:#3a1a1a;color:#e94560;font-weight:700;font-size:12px;">Revoke</button>`:""}
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  // Update stats too
+  const list2=Object.values(members);
+  document.getElementById("adminStats").innerHTML=`
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">👥</div><div style="font-weight:900;font-size:22px;">${list2.length}</div><div style="font-size:10px;color:#666;">Total</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">✅</div><div style="font-weight:900;font-size:22px;">${list2.filter(m=>isActive(m)).length}</div><div style="font-size:10px;color:#666;">Active</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">⏰</div><div style="font-weight:900;font-size:22px;">${list2.filter(m=>!isActive(m)).length}</div><div style="font-size:10px;color:#666;">Expired</div></div>
+  `;
+}
+
+function grantSub(phone){
+  const end=new Date();end.setDate(end.getDate()+SUB_DAYS);
+  members[phone].subEnd=end.toISOString();members[phone].active=true;
+  saveMembers();renderMemberList();
+}
+
+function revokeSub(phone){
+  members[phone].subEnd=new Date(0).toISOString();members[phone].active=false;
+  saveMembers();renderMemberList();
+}
+
+function toggleAddForm(){
+  const w=document.getElementById("addMemberFormWrap");
+  const ic=document.getElementById("addFormToggleIcon");
+  if(w.style.display==="none"){w.style.display="block";ic.textContent="−";}
+  else{w.style.display="none";ic.textContent="+";}
+}
+
+function addMember(){
+  const name=document.getElementById("newName").value.trim();
+  const phone=document.getElementById("newPhone").value.trim();
+  const pin=document.getElementById("newPin").value.trim();
+  if(!name||!phone||pin.length<4){alert("Sab fields fill karein. PIN minimum 4 digits hona chahiye.");return;}
+  const end=new Date();end.setDate(end.getDate()+SUB_DAYS);
+  members[phone]={name,phone,pin,subEnd:end.toISOString(),active:true,completedSets:{},completedWorkouts:{},workoutHistory:{},joinDate:new Date().toISOString()};
+  saveMembers();
+  document.getElementById("newName").value="";
+  document.getElementById("newPhone").value="";
+  document.getElementById("newPin").value="";
+  document.getElementById("addMemberFormWrap").style.display="none";
+  document.getElementById("addFormToggleIcon").textContent="+";
+  renderMemberList();
+}
+
+
+// ═══════════════════════ PAYMENT SYSTEM ═══════════════════════
+let adminSettings = JSON.parse(localStorage.getItem("ff_admin_settings") || JSON.stringify({
+  adminPass: "admin123",
+  easyPaisaNum: "03001234567",
+  jazzCashNum: "03111234567",
+  adminName: "Gym Admin"
+}));
+const saveSettings = () => localStorage.setItem("ff_admin_settings", JSON.stringify(adminSettings));
+
+let pendingPayments = JSON.parse(localStorage.getItem("ff_pending_payments") || "[]");
+const savePending = () => localStorage.setItem("ff_pending_payments", JSON.stringify(pendingPayments));
+
+let selectedPayMethod = null;
+
+function openPaymentModal(){
+  selectedPayMethod = null;
+  ["payStep1","payStep2","payStep3"].forEach((s,i)=>document.getElementById(s).style.display=i===0?"block":"none");
+  document.getElementById("epCard").style.border="2px solid #1e1e2e";
+  document.getElementById("jcCard").style.border="2px solid #1e1e2e";
+  document.getElementById("epCheck").style.display="none";
+  document.getElementById("jcCheck").style.display="none";
+  ["payName","payPhone","payPin"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("payMethodError").style.display="none";
+  document.getElementById("paymentModal").style.display="flex";
+}
+function closePaymentModal(){ document.getElementById("paymentModal").style.display="none"; }
+
+function selectPayMethod(method){
+  selectedPayMethod=method;
+  const isEP=method==="easypaisa";
+  document.getElementById("epCard").style.border=isEP?"2px solid #00c97a":"2px solid #1e1e2e";
+  document.getElementById("jcCard").style.border=!isEP?"2px solid #ff4444":"2px solid #1e1e2e";
+  document.getElementById("epCheck").style.display=isEP?"block":"none";
+  document.getElementById("jcCheck").style.display=!isEP?"block":"none";
+}
+
+function goPayStep2(){
+  const name=document.getElementById("payName").value.trim();
+  const phone=document.getElementById("payPhone").value.trim();
+  const pin=document.getElementById("payPin").value.trim();
+  const errEl=document.getElementById("payMethodError");
+  if(!name||!phone||pin.length<4){errEl.textContent="Sab fields fill karein. PIN 4 digits hona chahiye.";errEl.style.display="block";return;}
+  if(!selectedPayMethod){errEl.textContent="EasyPaisa ya JazzCash chunein.";errEl.style.display="block";return;}
+  errEl.style.display="none";
+  const isEP=selectedPayMethod==="easypaisa";
+  const num=isEP?adminSettings.easyPaisaNum:adminSettings.jazzCashNum;
+  const color=isEP?"#00c97a":"#ff4444";
+  const icon=isEP?"📱":"💸";
+  const title=isEP?"EasyPaisa":"JazzCash";
+  document.getElementById("payInstructions").innerHTML=`
+    <div style="background:${isEP?"#001a0f":"#1a0000"};border:2px solid ${color};border-radius:16px;padding:18px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:36px;margin-bottom:8px;">${icon}</div>
+      <div style="font-weight:900;font-size:18px;color:${color};margin-bottom:8px;">${title} se Bhejein</div>
+      <div style="font-size:13px;color:#888;margin-bottom:12px;">Yeh number pe ₹300 send karein:</div>
+      <div style="background:#0a0a18;border-radius:12px;padding:14px;margin-bottom:10px;">
+        <div style="font-size:24px;font-weight:900;letter-spacing:2px;color:#fff;">${num}</div>
+        <div style="font-size:11px;color:#666;margin-top:4px;">Account: ${adminSettings.adminName}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div style="background:#0a0a18;border-radius:10px;padding:8px;font-size:11px;"><div style="color:#666;font-size:9px;">Amount</div><div style="font-weight:800;color:#fff;">₹300</div></div>
+        <div style="background:#0a0a18;border-radius:10px;padding:8px;font-size:11px;"><div style="color:#666;font-size:9px;">Duration</div><div style="font-weight:800;color:#fff;">30 Days</div></div>
+        <div style="background:#0a0a18;border-radius:10px;padding:8px;font-size:11px;"><div style="color:#666;font-size:9px;">Method</div><div style="font-weight:800;color:${color};">${title}</div></div>
+      </div>
+    </div>
+    <div style="background:#111122;border-radius:12px;padding:12px 14px;font-size:12px;color:#666;line-height:1.8;margin-bottom:4px;">
+      <strong style="color:#aaa;">Steps:</strong><br/>
+      1. ${title} app kholo<br/>
+      2. Send Money → <strong style="color:#fff;">${num}</strong><br/>
+      3. Amount: <strong style="color:#fff;">₹300</strong><br/>
+      4. Transaction ID neeche daalein
+    </div>`;
+  document.getElementById("payTxId").value="";
+  document.getElementById("paySubmitError").style.display="none";
+  document.getElementById("payStep1").style.display="none";
+  document.getElementById("payStep2").style.display="block";
+}
+function goPayStep1(){ document.getElementById("payStep2").style.display="none"; document.getElementById("payStep1").style.display="block"; }
+
+function submitPayment(){
+  const txId=document.getElementById("payTxId").value.trim();
+  const errEl=document.getElementById("paySubmitError");
+  if(!txId){errEl.textContent="Transaction ID ya last 4 digits zaroor daalein.";errEl.style.display="block";return;}
+  errEl.style.display="none";
+  const name=document.getElementById("payName").value.trim();
+  const phone=document.getElementById("payPhone").value.trim();
+  const pin=document.getElementById("payPin").value.trim();
+  const method=selectedPayMethod==="easypaisa"?"EasyPaisa":"JazzCash";
+  const req={id:Date.now(),name,phone,pin,method,txId,submittedAt:new Date().toISOString(),status:"pending"};
+  pendingPayments.push(req);
+  savePending();
+  document.getElementById("payPendingDetails").innerHTML=`
+    <strong style="color:#aaa;">Name:</strong> ${name}<br/>
+    <strong style="color:#aaa;">Phone:</strong> ${phone}<br/>
+    <strong style="color:#aaa;">Method:</strong> ${method}<br/>
+    <strong style="color:#aaa;">Tx ID:</strong> ${txId}<br/>
+    <strong style="color:#aaa;">Submitted:</strong> ${new Date().toLocaleString("en-PK")}`;
+  document.getElementById("payStep2").style.display="none";
+  document.getElementById("payStep3").style.display="block";
+}
+
+function renderPendingPayments(){
+  const pSection=document.getElementById("pendingPaymentsSection");
+  if(!pSection)return;
+  const pending=pendingPayments.filter(p=>p.status==="pending");
+  let html=`
+  <div class="card" style="margin-bottom:14px;padding:0;overflow:hidden;">
+    <button onclick="togglePaySettings()" style="width:100%;padding:15px 18px;background:none;border:none;color:#e8e6f0;font-weight:700;font-size:14px;text-align:left;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+      <span>⚙️ Payment Numbers (EasyPaisa / JazzCash)</span>
+      <span id="paySettingsIcon" style="color:#facc15;font-size:18px;">+</span>
+    </button>
+    <div id="paySettingsWrap" style="display:none;padding:0 18px 18px;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <input class="inp" id="setAdminName" placeholder="Gym/Admin Name" value="${adminSettings.adminName}"/>
+        <input class="inp" id="setEPNum" type="tel" placeholder="EasyPaisa Number" value="${adminSettings.easyPaisaNum}"/>
+        <input class="inp" id="setJCNum" type="tel" placeholder="JazzCash Number" value="${adminSettings.jazzCashNum}"/>
+        <button onclick="savePaySettings()" class="btn-primary" style="padding:11px;">💾 Numbers Save Karein</button>
+        <div id="paySettingsSaved" style="display:none;color:#4ade80;font-size:13px;text-align:center;">✅ Saved!</div>
+      </div>
+    </div>
+  </div>`;
+  if(pending.length>0){
+    html+=`<div style="font-weight:800;font-size:16px;margin-bottom:10px;color:#facc15;">⏳ Pending Payments (${pending.length})</div>`;
+    pending.forEach(p=>{
+      html+=`<div style="background:#1a1800;border-radius:14px;padding:14px 16px;border:1px solid #3a3000;margin-bottom:10px;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+          <div style="flex:1;">
+            <div style="font-weight:800;font-size:14px;">${p.name}</div>
+            <div style="font-size:11px;color:#666;margin-top:2px;">📱 ${p.phone} &nbsp;·&nbsp; ${p.method}</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">🔢 Tx: <strong style="color:#facc15;">${p.txId}</strong></div>
+            <div style="font-size:10px;color:#555;margin-top:2px;">${new Date(p.submittedAt).toLocaleString("en-PK")}</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button onclick="approvePendingPayment(${p.id})" style="padding:7px 12px;border-radius:14px;border:none;cursor:pointer;background:#1a3a1a;color:#4ade80;font-weight:700;font-size:11px;">✅ Approve</button>
+            <button onclick="rejectPendingPayment(${p.id})" style="padding:7px 12px;border-radius:14px;border:none;cursor:pointer;background:#3a1a1a;color:#e94560;font-weight:700;font-size:11px;">❌ Reject</button>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+  pSection.innerHTML=html;
+}
+
+function togglePaySettings(){
+  const w=document.getElementById("paySettingsWrap"),ic=document.getElementById("paySettingsIcon");
+  if(w.style.display==="none"){w.style.display="block";ic.textContent="−";}else{w.style.display="none";ic.textContent="+";}
+}
+function savePaySettings(){
+  adminSettings.adminName=document.getElementById("setAdminName").value.trim()||adminSettings.adminName;
+  adminSettings.easyPaisaNum=document.getElementById("setEPNum").value.trim()||adminSettings.easyPaisaNum;
+  adminSettings.jazzCashNum=document.getElementById("setJCNum").value.trim()||adminSettings.jazzCashNum;
+  saveSettings();
+  document.getElementById("paySettingsSaved").style.display="block";
+  setTimeout(()=>document.getElementById("paySettingsSaved").style.display="none",2000);
+}
+function approvePendingPayment(id){
+  const idx=pendingPayments.findIndex(p=>p.id==id);
+  if(idx===-1)return;
+  const p=pendingPayments[idx];
+  const end=new Date();end.setDate(end.getDate()+SUB_DAYS);
+  if(members[p.phone]){members[p.phone].subEnd=end.toISOString();members[p.phone].active=true;}
+  else{members[p.phone]={name:p.name,phone:p.phone,pin:p.pin,subEnd:end.toISOString(),active:true,completedSets:{},completedWorkouts:{},workoutHistory:{},joinDate:new Date().toISOString()};}
+  saveMembers();
+  pendingPayments[idx].status="approved";
+  savePending();
+  renderMemberList();
+}
+function rejectPendingPayment(id){
+  const idx=pendingPayments.findIndex(p=>p.id==id);
+  if(idx!==-1){pendingPayments[idx].status="rejected";savePending();}
+  renderPendingPayments();
+}
+
+// ═══════════════════════ PASSWORD / PIN CHANGE ═══════════════════════
+function openChangePassModal(){
+  ["cpOld","cpNew","cpConfirm"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cpError").style.display="none";
+  document.getElementById("cpSuccess").style.display="none";
+  document.getElementById("changePassModal").style.display="flex";
+}
+function closeChangePassModal(){ document.getElementById("changePassModal").style.display="none"; }
+function doChangeAdminPass(){
+  const old=document.getElementById("cpOld").value;
+  const nw=document.getElementById("cpNew").value;
+  const cf=document.getElementById("cpConfirm").value;
+  const errEl=document.getElementById("cpError"),okEl=document.getElementById("cpSuccess");
+  errEl.style.display="none";okEl.style.display="none";
+  if(old!==adminSettings.adminPass){errEl.textContent="Purana password galat hai.";errEl.style.display="block";return;}
+  if(nw.length<6){errEl.textContent="Naya password min 6 characters hona chahiye.";errEl.style.display="block";return;}
+  if(nw!==cf){errEl.textContent="Naya password match nahi kar raha.";errEl.style.display="block";return;}
+  adminSettings.adminPass=nw;saveSettings();
+  okEl.textContent="✅ Password change ho gaya!";okEl.style.display="block";
+  setTimeout(()=>closeChangePassModal(),1800);
+}
+
+let changePinTargetPhone=null;
+function openChangeMemberPinModal(phone){
+  changePinTargetPhone=phone;
+  ["cmpNew","cmpConfirm"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cmpError").style.display="none";
+  document.getElementById("cmpSuccess").style.display="none";
+  document.getElementById("cmpName").textContent=`Member: ${members[phone]?.name} (${phone})`;
+  document.getElementById("changeMemberPinModal").style.display="flex";
+}
+function closeChangeMemberPinModal(){ document.getElementById("changeMemberPinModal").style.display="none";changePinTargetPhone=null; }
+function doChangeMemberPin(){
+  const nw=document.getElementById("cmpNew").value.trim();
+  const cf=document.getElementById("cmpConfirm").value.trim();
+  const errEl=document.getElementById("cmpError"),okEl=document.getElementById("cmpSuccess");
+  errEl.style.display="none";okEl.style.display="none";
+  if(nw.length<4){errEl.textContent="PIN 4 digits hona chahiye.";errEl.style.display="block";return;}
+  if(nw!==cf){errEl.textContent="PIN match nahi kar raha.";errEl.style.display="block";return;}
+  members[changePinTargetPhone].pin=nw;saveMembers();
+  okEl.textContent="✅ PIN change ho gaya!";okEl.style.display="block";
+  setTimeout(()=>closeChangeMemberPinModal(),1500);
+}
+
+function doMemberChangePin(){
+  if(!currentUser)return;
+  const old=document.getElementById("mcpOld").value.trim();
+  const nw=document.getElementById("mcpNew").value.trim();
+  const cf=document.getElementById("mcpConfirm").value.trim();
+  const errEl=document.getElementById("mcpError"),okEl=document.getElementById("mcpSuccess");
+  errEl.style.display="none";okEl.style.display="none";
+  const m=members[currentUser.phone];
+  if(!m||m.pin!==old){errEl.textContent="Purana PIN galat hai.";errEl.style.display="block";return;}
+  if(nw.length<4){errEl.textContent="Naya PIN 4 digits ka hona chahiye.";errEl.style.display="block";return;}
+  if(nw!==cf){errEl.textContent="PIN match nahi kar raha.";errEl.style.display="block";return;}
+  members[currentUser.phone].pin=nw;saveMembers();
+  okEl.textContent="✅ PIN change ho gaya!";okEl.style.display="block";
+  ["mcpOld","mcpNew","mcpConfirm"].forEach(id=>document.getElementById(id).value="");
+  setTimeout(()=>document.getElementById("memberChangePinModal").style.display="none",1800);
+}
+
+// ── Patch doAdminLogin to use saved adminSettings.adminPass ──
+const _orig_doAdminLogin=doAdminLogin;
+doAdminLogin=function(){
+  const pass=document.getElementById("adminPassInput").value;
+  if(pass===adminSettings.adminPass){
+    document.getElementById("adminPassInput").value="";
+    document.getElementById("adminError").style.display="none";
+    renderAdminPanel();show("adminScreen");
+  } else {
+    const el=document.getElementById("adminError");
+    el.textContent="Wrong password.";el.style.display="block";
+  }
+};
+
+// ── Patch renderMemberList to include PIN Change button + pending payments ──
+const _orig_renderMemberList=renderMemberList;
+renderMemberList=function(){
+  const list=Object.values(members);
+  const ml=document.getElementById("memberList");
+  if(list.length===0){
+    ml.innerHTML=`<div style="color:#444;text-align:center;padding:48px;background:#0d0d1a;border-radius:16px;border:1px dashed #1e1e2e;"><div style="font-size:36px;margin-bottom:8px;">🏋️</div><div>No members yet.</div></div>`;
+    renderPendingPayments();return;
+  }
+  ml.innerHTML=list.map(m=>{
+    const act=isActive(m),dl=daysLeft(m);
+    const wc=dl<=3?"#e94560":dl<=7?"#facc15":"#4ade80";
+    const wkCount=Object.keys(m.workoutHistory||{}).length;
+    return `<div style="background:#0d0d1a;border-radius:16px;padding:14px 16px;border:1px solid ${act?"#1a3a1a":"#3a1a1a"};margin-bottom:10px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:150px;">
+          <div style="font-weight:800;font-size:14px;">${m.name}</div>
+          <div style="font-size:11px;color:#666;margin-top:2px;">📱 ${m.phone} &nbsp;·&nbsp; 🏋️ ${wkCount} sessions</div>
+          <div style="font-size:12px;margin-top:4px;">${act?`<span style="color:${wc};font-weight:700;">✅ ${dl} days left</span>`:`<span style="color:#e94560;font-weight:700;">🔒 Expired</span>`}</div>
+          ${m.subEnd?`<div style="font-size:10px;color:#555;margin-top:2px;">${new Date(m.subEnd).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</div>`:""}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0;">
+          <div style="display:flex;gap:5px;">
+            <button onclick="grantSub('${m.phone}')" style="padding:6px 10px;border-radius:12px;border:none;cursor:pointer;background:#1a3a1a;color:#4ade80;font-weight:700;font-size:11px;">+30d</button>
+            ${act?`<button onclick="revokeSub('${m.phone}')" style="padding:6px 10px;border-radius:12px;border:none;cursor:pointer;background:#3a1a1a;color:#e94560;font-weight:700;font-size:11px;">Revoke</button>`:""}
+          </div>
+          <button onclick="openChangeMemberPinModal('${m.phone}')" style="padding:5px 10px;border-radius:12px;border:none;cursor:pointer;background:#1a1a2e;color:#facc15;font-weight:700;font-size:11px;">🔑 PIN Change</button>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  renderPendingPayments();
+  const list2=Object.values(members);
+  document.getElementById("adminStats").innerHTML=`
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">👥</div><div style="font-weight:900;font-size:22px;">${list2.length}</div><div style="font-size:10px;color:#666;">Total</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">✅</div><div style="font-weight:900;font-size:22px;">${list2.filter(m=>isActive(m)).length}</div><div style="font-size:10px;color:#666;">Active</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:22px;margin-bottom:4px;">⏰</div><div style="font-weight:900;font-size:22px;">${list2.filter(m=>!isActive(m)).length}</div><div style="font-size:10px;color:#666;">Expired</div></div>`;
+};
+
+  const link=window.location.href;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(link).then(()=>{
+      const btn=document.getElementById("copyLinkBtn");
+      btn.textContent="✓ Copied!";btn.style.background="#4ade80";btn.style.color="#0a0a0a";
+      setTimeout(()=>{btn.textContent="Copy Link";btn.style.background="linear-gradient(135deg,#e94560,#f97316)";btn.style.color="#fff";},2500);
+    });
+  } else {
+    prompt("Yeh link copy karo:",link);
+  }
+}
 </script>
- 
 </body>
 </html>
